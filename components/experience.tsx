@@ -1,21 +1,28 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { motion } from "framer-motion"
-import { AnimatedSection } from "./animated-section"
-import { Briefcase, GraduationCap, Users } from "lucide-react"
+import { motion } from "framer-motion";
+import { AnimatedSection } from "./animated-section";
+import { Briefcase, GraduationCap, Users } from "lucide-react";
 
 interface TimelineItemProps {
-  title: string
-  company: string
-  period: string
-  description: string[]
-  icon: React.ReactNode
-  isLast?: boolean
+  title: string;
+  company: string;
+  period: string;
+  description: string[];
+  icon: React.ReactNode;
+  isLast?: boolean;
 }
 
-function TimelineItem({ title, company, period, description, icon, isLast = false }: TimelineItemProps) {
+function TimelineItem({
+  title,
+  company,
+  period,
+  description,
+  icon,
+  isLast = false,
+}: TimelineItemProps) {
   return (
     <motion.div
       className="flex gap-4"
@@ -27,7 +34,10 @@ function TimelineItem({ title, company, period, description, icon, isLast = fals
       <div className="flex flex-col items-center">
         <motion.div
           className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center text-primary"
-          whileHover={{ scale: 1.1, backgroundColor: "rgba(139, 92, 246, 0.3)" }}
+          whileHover={{
+            scale: 1.1,
+            backgroundColor: "rgba(139, 92, 246, 0.3)",
+          }}
         >
           {icon}
         </motion.div>
@@ -49,7 +59,7 @@ function TimelineItem({ title, company, period, description, icon, isLast = fals
         </ul>
       </div>
     </motion.div>
-  )
+  );
 }
 
 export function Experience() {
@@ -59,7 +69,7 @@ export function Experience() {
       company: "Techave.Dev - Yogyakarta",
       period: "Dec 2022 - Present",
       description: [
-        "2 Years experience as a Front-end Developer",
+        "2+ Years experience as a Front-end Developer",
         "Building responsive and interactive web applications",
         "Collaborating with design and backend teams",
       ],
@@ -88,9 +98,20 @@ export function Experience() {
       ],
       icon: <Briefcase size={24} />,
     },
-  ]
+  ];
 
   const education = [
+    {
+      title: "Certificate of Junior Web Developer",
+      company: "BNSP - Yogyakarta",
+      period: "Jan 2023 - Jan 2027",
+      description: [
+        "Successfully completed the Junior Web Developer course",
+        "Learned web development fundamentals",
+        "Built responsive websites using HTML, CSS, and JavaScript",
+      ],
+      icon: <GraduationCap size={24} />,
+    },
     {
       title: "React JS Web Frontend Bootcamp",
       company: "Sanber Code - Bandung",
@@ -145,7 +166,7 @@ export function Experience() {
       ],
       icon: <GraduationCap size={24} />,
     },
-  ]
+  ];
 
   const organizations = [
     {
@@ -170,15 +191,17 @@ export function Experience() {
       ],
       icon: <Users size={24} />,
     },
-  ]
+  ];
 
   return (
     <AnimatedSection className="py-16" id="experience">
       <div className="text-center mb-12">
-        <h2 className="text-3xl font-bold mb-4 text-gradient">Experience & Education</h2>
+        <h2 className="text-3xl font-bold mb-4 text-gradient">
+          Experience & Education
+        </h2>
         <p className="text-gray-400 max-w-2xl mx-auto">
-          My professional journey, educational background, and organizational experiences that have shaped my skills and
-          expertise.
+          My professional journey, educational background, and organizational
+          experiences that have shaped my skills and expertise.
         </p>
       </div>
 
@@ -190,7 +213,11 @@ export function Experience() {
           </h3>
           <div className="ml-2">
             {workExperience.map((item, index) => (
-              <TimelineItem key={index} {...item} isLast={index === workExperience.length - 1} />
+              <TimelineItem
+                key={index}
+                {...item}
+                isLast={index === workExperience.length - 1}
+              />
             ))}
           </div>
         </div>
@@ -202,7 +229,11 @@ export function Experience() {
           </h3>
           <div className="ml-2">
             {education.map((item, index) => (
-              <TimelineItem key={index} {...item} isLast={index === education.length - 1} />
+              <TimelineItem
+                key={index}
+                {...item}
+                isLast={index === education.length - 1}
+              />
             ))}
           </div>
         </div>
@@ -215,11 +246,14 @@ export function Experience() {
         </h3>
         <div className="ml-2">
           {organizations.map((item, index) => (
-            <TimelineItem key={index} {...item} isLast={index === organizations.length - 1} />
+            <TimelineItem
+              key={index}
+              {...item}
+              isLast={index === organizations.length - 1}
+            />
           ))}
         </div>
       </div>
     </AnimatedSection>
-  )
+  );
 }
-

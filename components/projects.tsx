@@ -62,7 +62,7 @@ function ProjectCard({
           {title}
         </h3>
         <p className="text-gray-400 text-sm mb-4">{description}</p>
-        <div className="flex gap-4">
+        {/* <div className="flex gap-4">
           <Link href={demoLink} target="_blank" rel="noopener noreferrer">
             <Button
               variant="outline"
@@ -81,7 +81,7 @@ function ProjectCard({
               <Github size={16} /> Code
             </Button>
           </Link>
-        </div>
+        </div> */}
       </div>
     </motion.div>
   );
@@ -90,58 +90,58 @@ function ProjectCard({
 export function Projects() {
   const projects = [
     {
-      title: "E-Ticketing Platform",
+      title: "FlyWise E-Ticketing System",
       description:
         "Full-stack e-ticketing solution with search functionality and passenger data management.",
-      image: "https://placehold.co/400x300/8B5CF6/FFFFFF",
+      image: "/projects/flywise.png",
       demoLink: "#",
       githubLink: "#",
-      tags: ["React", "Node.js", "Express", "MongoDB"],
+      tags: ["React", "Node.js", "Express", "PostgreSQL"],
     },
     {
-      title: "Personal Notes App",
+      title: "Car Showcase Website",
       description:
-        "React-based note-taking application with CRUD functionality and user authentication.",
-      image: "https://placehold.co/400x300/8B5CF6/FFFFFF",
+        "A car showcase website with a fully responsive design and a modern look.",
+      image: "/projects/car-showcase.png",
       demoLink: "#",
       githubLink: "#",
-      tags: ["React", "Firebase", "CSS"],
+      tags: ["React", "CSS"],
     },
     {
       title: "AWS Data Analysis Project",
       description:
         "Data analysis project using AWS cloud services for processing and visualizing large datasets.",
-      image: "https://placehold.co/400x300/8B5CF6/FFFFFF",
+      image: "/projects/chatbot-using-aws.png",
       demoLink: "#",
       githubLink: "#",
       tags: ["AWS", "Python", "Data Analysis"],
     },
     {
-      title: "E-commerce Platform",
+      title: "Company Profile Website",
       description:
-        "Full-featured e-commerce solution with cart, checkout, and payment integration.",
-      image: "https://placehold.co/400x300/8B5CF6/FFFFFF",
+        "A company profile website with a clean and modern design and fully functional.",
+      image: "/projects/arahmata-profile.png",
       demoLink: "#",
       githubLink: "#",
-      tags: ["React", "Node.js", "MongoDB", "Stripe"],
+      tags: ["React", "Node.js", "Express", "PostgreSQL"],
     },
     {
-      title: "Social Media App",
+      title: "Real-Estate Website",
       description:
-        "Real-time social media platform with messaging and post sharing features.",
-      image: "https://placehold.co/400x300/8B5CF6/FFFFFF",
+        "A real-estate website with a fully informative and responsive design.",
+      image: "/projects/saeland.png",
       demoLink: "#",
       githubLink: "#",
-      tags: ["React", "Firebase", "Socket.io"],
+      tags: ["React", "Node.js", "Express", "PostgreSQL"],
     },
     {
-      title: "Task Management Tool",
+      title: "URL Classification System",
       description:
-        "Collaborative task management app with drag-and-drop interface and team features.",
-      image: "https://placehold.co/400x300/8B5CF6/FFFFFF",
+        "A URL classification system that classifies URLs into Benign or Malicious.",
+      image: "/projects/url-classification.png",
       demoLink: "#",
       githubLink: "#",
-      tags: ["React", "Redux", "Node.js"],
+      tags: ["Python", "Machine Learning"],
     },
   ];
 

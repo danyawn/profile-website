@@ -9,11 +9,11 @@ import { Testimonials } from "@/components/testimonials";
 import { Experience } from "@/components/experience";
 import { ContactForm } from "@/components/contact-form";
 import { AnimatedCursor } from "@/components/animated-cursor";
-import Image from "next/image";
 import { Navbar } from "@/components/navbar";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useEffect } from "react";
 import { ChevronDown } from "lucide-react";
+import Image from "next/image";
 
 export default function Home() {
   const targetRef = useRef<HTMLDivElement>(null);
@@ -58,6 +58,11 @@ export default function Home() {
     if (servicesSection) {
       servicesSection.scrollIntoView({ behavior: "smooth" });
     }
+  };
+
+  // route to cv /cv/resume-dan.pdf
+  const handleDownloadCV = () => {
+    window.open("/cv/resume-dan.pdf", "_blank");
   };
 
   return (
@@ -142,6 +147,7 @@ export default function Home() {
                   size="lg"
                   variant="outline"
                   className="border-primary text-primary hover:bg-primary hover:text-white"
+                  onClick={handleDownloadCV}
                 >
                   Download CV
                 </Button>
@@ -161,7 +167,7 @@ export default function Home() {
               <div className="relative aspect-square max-w-[400px] mx-auto">
                 <div className="absolute inset-0 bg-gradient-to-r from-primary/30 to-purple-500/30 rounded-full blur-3xl animate-pulse-slow" />
                 <motion.div
-                  className="relative aspect-square max-w-[400px] mx-auto animate-float"
+                  className="relative aspect-square max-w-[400px] mx-auto animate-float rounded-2xl overflow-hidden"
                   animate={{
                     boxShadow: [
                       "0 0 20px 10px rgba(139, 92, 246, 0.3)",
@@ -176,10 +182,10 @@ export default function Home() {
                   }}
                 >
                   <Image
-                    src="https://placehold.co/400x400/8B5CF6/FFFFFF"
+                    src="/images/profile_me.jpg"
                     alt="Profile"
                     fill
-                    className="rounded-2xl object-cover"
+                    className="object-cover"
                     priority
                   />
                 </motion.div>
@@ -207,7 +213,7 @@ export default function Home() {
         <Projects />
         <Skills />
         <Experience />
-        <Testimonials />
+        {/* <Testimonials /> */}
         <ContactForm />
       </div>
 

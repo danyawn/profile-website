@@ -7,14 +7,14 @@ import { AnimatedSkillBar } from "./animated-skill-bar"
 export function Skills() {
   const skills = [
     { name: "React", percentage: 92 },
-    { name: "CSS", percentage: 85 },
+    { name: "CSS", percentage: 90 },
     { name: "NextJS", percentage: 92 },
     { name: "Node.js", percentage: 87 },
     { name: "JavaScript", percentage: 93 },
     { name: "React Native", percentage: 85 },
-    { name: "TypeScript", percentage: 80 },
-    { name: "AWS", percentage: 75 },
-    { name: "UI/UX Design", percentage: 78 },
+    { name: "TypeScript", percentage: 90 },
+    { name: "AWS", percentage: 70 },
+    { name: "UI/UX Design", percentage: 70 },
   ]
 
   return (

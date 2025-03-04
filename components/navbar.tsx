@@ -85,7 +85,7 @@ export function Navbar() {
     { href: "#works", label: "Works" },
     { href: "#skills", label: "Skills" },
     { href: "#experience", label: "Experience" },
-    { href: "#testimonials", label: "Testimonials" },
+    // { href: "#testimonials", label: "Testimonials" },
   ]
 
   return (
