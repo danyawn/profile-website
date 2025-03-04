@@ -5,7 +5,7 @@ import { Stats } from "@/components/stats";
 import { Services } from "@/components/services";
 import { Projects } from "@/components/projects";
 import { Skills } from "@/components/skills";
-import { Testimonials } from "@/components/testimonials";
+// import { Testimonials } from "@/components/testimonials";
 import { Experience } from "@/components/experience";
 import { ContactForm } from "@/components/contact-form";
 import { AnimatedCursor } from "@/components/animated-cursor";
@@ -103,7 +103,7 @@ export default function Home() {
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="mt-56 lg:mt-0" // Added margin-top to push content down
+              className="mt-12 md:mt-56 lg:mt-0" // Added margin-top to push content down
             >
               <motion.h1
                 className="text-4xl lg:text-6xl font-bold mb-4"
