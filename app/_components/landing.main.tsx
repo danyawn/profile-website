@@ -73,7 +73,7 @@ export default function Home() {
       {/* Hero Section */}
       <motion.section
         ref={targetRef}
-        className="relative h-screen flex items-center justify-center overflow-hidden"
+        className="relative min-h-screen flex items-center justify-center overflow-hidden py-16 md:py-0"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
@@ -95,18 +95,18 @@ export default function Home() {
         />
 
         <motion.div
-          className="container mx-auto px-10 z-10"
+          className="container mx-auto px-4 sm:px-6 lg:px-10 z-10"
           style={{ opacity, scale, y }}
         >
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="mt-40 md:mt-56 lg:mt-0" // Added margin-top to push content down
+              className="mt-16 sm:mt-24 lg:mt-0 text-center lg:text-left"
             >
               <motion.h1
-                className="text-4xl lg:text-6xl font-bold mb-4"
+                className="text-3xl sm:text-4xl lg:text-6xl font-bold mb-4"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
@@ -122,7 +122,7 @@ export default function Home() {
                 </motion.span>
               </motion.h1>
               <motion.p
-                className="text-gray-400 mb-8"
+                className="text-gray-400 mb-8 text-sm sm:text-base"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.8 }}
@@ -132,21 +132,21 @@ export default function Home() {
                 for creating intuitive interfaces and engaging user experiences.
               </motion.p>
               <motion.div
-                className="flex gap-4"
+                className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 1 }}
               >
                 <Button
                   size="lg"
-                  className="bg-primary hover:bg-primary/90 hover:ring-2 hover:ring-primary hover:ring-offset-2 hover:ring-offset-black transition-all duration-300"
+                  className="w-full sm:w-auto bg-primary hover:bg-primary/90 hover:ring-2 hover:ring-primary hover:ring-offset-2 hover:ring-offset-black transition-all duration-300"
                 >
                   Contact Me
                 </Button>
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-primary text-primary hover:bg-primary hover:text-white"
+                  className="w-full sm:w-auto border-primary text-primary hover:bg-primary hover:text-white"
                   onClick={handleDownloadCV}
                 >
                   Download CV
@@ -154,7 +154,7 @@ export default function Home() {
               </motion.div>
             </motion.div>
             <motion.div
-              className="relative"
+              className="relative order-first lg:order-last"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{
@@ -164,10 +164,10 @@ export default function Home() {
                 stiffness: 100,
               }}
             >
-              <div className="relative aspect-square max-w-[400px] mx-auto">
+              <div className="relative aspect-square w-[250px] sm:w-[300px] md:w-[400px] mx-auto">
                 <div className="absolute inset-0 bg-gradient-to-r from-primary/30 to-purple-500/30 rounded-full blur-3xl animate-pulse-slow" />
                 <motion.div
-                  className="relative aspect-square max-w-[400px] mx-auto animate-float rounded-2xl overflow-hidden"
+                  className="relative aspect-square w-full rounded-2xl overflow-hidden"
                   animate={{
                     boxShadow: [
                       "0 0 20px 10px rgba(139, 92, 246, 0.3)",
@@ -195,13 +195,13 @@ export default function Home() {
         </motion.div>
 
         <motion.div
-          className="absolute bottom-10 left-1/2 transform -translate-x-1/2 cursor-pointer scroll-down-indicator"
+          className="absolute bottom-4 sm:bottom-10  left-[45%] -translate-x-[50%] cursor-pointer scroll-down-indicator flex justify-center items-center"
           onClick={scrollToContent}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5, duration: 0.5 }}
         >
-          <ChevronDown className="text-primary h-10 w-10" />
+          <ChevronDown className="text-primary h-8 w-8 sm:h-10 sm:w-10" />
         </motion.div>
       </motion.section>
 
