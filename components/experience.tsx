@@ -65,13 +65,14 @@ function TimelineItem({
 export function Experience() {
   const workExperience = [
     {
-      title: "Front End Developer",
+      title: "Front-end Web Developer",
       company: "Techave.Dev - Yogyakarta",
       period: "Dec 2022 - Present",
       description: [
-        "2+ Years experience as a Front-end Developer",
-        "Building responsive and interactive web applications",
-        "Collaborating with design and backend teams",
+        "2+ Years experience as a Front-end Web Developer",
+        "Building scalable, responsive and interactive web applications",
+        "Developing frontend solutions using modern technologies",
+        "Collaborating with design teams and implementing comprehensive software solutions",
       ],
       icon: <Briefcase size={24} />,
     },
@@ -101,6 +102,19 @@ export function Experience() {
   ];
 
   const education = [
+    {
+      title: "Bachelor of Informatics Engineering (S1)",
+      company: "Universitas Pembangunan Nasional Veteran Yogyakarta",
+      period: "Sep 2020 - Apr 2025",
+      description: [
+        "Pursuing Bachelor's degree in Informatics Engineering with focus on software development",
+        "Studying advanced programming concepts, data structures, and algorithms",
+        "Gaining comprehensive understanding of software engineering principles",
+        "Developing expertise in web technologies, database systems, and software architecture",
+        "Maintaining a GPA of 3.69 (2025)",
+      ],
+      icon: <GraduationCap size={24} />,
+    },
     {
       title: "Certificate of Junior Web Developer",
       company: "BNSP - Yogyakarta",

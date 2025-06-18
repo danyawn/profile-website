@@ -1,6 +1,6 @@
 # 🚀 Wayan Danu Tirta's Portfolio
 
-A modern and interactive portfolio website showcasing my journey as a Front-End Developer. Built with cutting-edge technologies to deliver a seamless user experience with elegant design and smooth interactions.
+A modern and interactive portfolio website showcasing my journey as a Full-stack Web Developer & Software Engineer. Built with cutting-edge technologies to deliver a seamless user experience with elegant design and smooth interactions.
 
 ## ✨ Key Features
 

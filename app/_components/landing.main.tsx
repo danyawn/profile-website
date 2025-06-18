@@ -118,7 +118,7 @@ export default function Home() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.6 }}
                 >
-                  Front-End Web Developer.
+                  Full-stack Web Developer & Software Engineer
                 </motion.span>
               </motion.h1>
               <motion.p
@@ -127,9 +127,10 @@ export default function Home() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.8 }}
               >
-                I help companies solve problems by building accessible and
-                inclusive web products and digital experiences. With a passion
-                for creating intuitive interfaces and engaging user experiences.
+                I help companies transform their digital presence by building scalable, 
+                accessible, and high-performance web applications. With expertise in both 
+                frontend and backend technologies, I create end-to-end solutions that 
+                deliver exceptional user experiences and robust business value.
               </motion.p>
               <motion.div
                 className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
@@ -226,8 +227,9 @@ export default function Home() {
                 Wayan Danu Tirta
               </h3>
               <p className="text-gray-400">
-                Front-End Developer based in Yogyakarta, Indonesia. Available
-                for freelance work and full-time positions.
+                Full-stack Web Developer & Software Engineer from Yogyakarta, Indonesia. 
+                Specializing in scalable web applications and innovative digital solutions.
+                Available for freelance projects and full-time opportunities.
               </p>
             </div>
             <div>

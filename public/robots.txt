@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+
+# Host
+Host: https://wayandanutirta.dev
+
+# Sitemaps
+Sitemap: https://wayandanutirta.dev/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 1
+
+# Disallow specific paths (if any)
+# Disallow: /admin/
+# Disallow: /private/

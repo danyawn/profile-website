@@ -1,11 +1,6 @@
-import dynamic from "next/dynamic";
+"use client";
 
-const LandingMain = dynamic(
-  () => import("./landing.main").then((mod) => mod.default),
-  {
-    ssr: false,
-  }
-);
+import LandingMain from "./landing.main";
 
 export default function LandingServer() {
   return <LandingMain />;

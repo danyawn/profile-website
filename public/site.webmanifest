@@ -1,0 +1,44 @@
+{
+  "name": "Wayan Danu Tirta - Full-stack Web Developer & Software Engineer",
+  "short_name": "Wayan Danu",
+  "description": "Professional Full-stack Web Developer and Software Engineer from Yogyakarta, Indonesia. Expert in React.js, Next.js, Node.js, AWS Cloud Services, and modern web technologies.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#8B5CF6",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-icon.svg", 
+      "sizes": "180x180",
+      "type": "image/svg+xml"
+    }
+  ],
+  "categories": ["productivity", "developer-tools", "portfolio"],
+  "shortcuts": [
+    {
+      "name": "View Projects",
+      "url": "/#works",
+      "description": "Browse my featured projects and work"
+    },
+    {
+      "name": "Contact Me",
+      "url": "/#contact",
+      "description": "Get in touch for collaboration"
+    },
+    {
+      "name": "Download CV",
+      "url": "/cv/resume-dan.pdf",
+      "description": "Download my resume"
+    }
+  ]
+}

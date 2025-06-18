@@ -1,8 +1,8 @@
 import React from "react";
-import LandingServer from "./_components/landing.server";
+import LandingMain from "./_components/landing.main";
 
 const page = () => {
-  return <LandingServer />;
+  return <LandingMain />;
 };
 
 export default page;
