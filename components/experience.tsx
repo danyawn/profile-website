@@ -1,7 +1,6 @@
 "use client";
 
 import type React from "react";
-
 import { motion } from "framer-motion";
 import { AnimatedSection } from "./animated-section";
 import { Briefcase, GraduationCap, Users } from "lucide-react";
