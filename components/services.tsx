@@ -26,12 +26,13 @@ function ServiceCard({ title, description, icon, index }: ServiceProps) {
     if (!el) return;
 
     // Card entrance animation
-    gsap.fromTo(el,
+    gsap.fromTo(
+      el,
       {
         opacity: 0,
         y: 60,
         rotateX: 15,
-        scale: 0.9
+        scale: 0.9,
       },
       {
         opacity: 1,
@@ -44,16 +45,17 @@ function ServiceCard({ title, description, icon, index }: ServiceProps) {
         scrollTrigger: {
           trigger: el,
           start: "top 80%",
-          toggleActions: "play none none reverse"
-        }
+          toggleActions: "play none none reverse",
+        },
       }
     );
 
     // Icon animation
-    gsap.fromTo(el.querySelector('.service-icon'),
+    gsap.fromTo(
+      el.querySelector(".service-icon"),
       {
         scale: 0,
-        rotate: -180
+        rotate: -180,
       },
       {
         scale: 1,
@@ -64,19 +66,19 @@ function ServiceCard({ title, description, icon, index }: ServiceProps) {
         scrollTrigger: {
           trigger: el,
           start: "top 80%",
-          toggleActions: "play none none reverse"
-        }
+          toggleActions: "play none none reverse",
+        },
       }
     );
 
     return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, [index]);
 
   return (
     <div ref={cardRef}>
-      <AnimatedCard className="hover:border-primary/40 transition-colors min-h-[200px]">
+      <AnimatedCard className="transition-all duration-300 min-h-[200px] hover:shadow-xl">
         <motion.div
           className="service-icon text-primary mb-4"
           initial={{ scale: 1 }}
@@ -100,11 +102,12 @@ export function Services() {
     if (!el) return;
 
     // Title animation
-    gsap.fromTo(el.querySelector('h2'),
+    gsap.fromTo(
+      el.querySelector("h2"),
       {
         opacity: 0,
         y: -30,
-        scale: 0.8
+        scale: 0.8,
       },
       {
         opacity: 1,
@@ -115,16 +118,17 @@ export function Services() {
         scrollTrigger: {
           trigger: el,
           start: "top 85%",
-          toggleActions: "play none none reverse"
-        }
+          toggleActions: "play none none reverse",
+        },
       }
     );
 
     // Description animation
-    gsap.fromTo(el.querySelector('p'),
+    gsap.fromTo(
+      el.querySelector("p"),
       {
         opacity: 0,
-        y: 20
+        y: 20,
       },
       {
         opacity: 1,
@@ -135,13 +139,13 @@ export function Services() {
         scrollTrigger: {
           trigger: el,
           start: "top 85%",
-          toggleActions: "play none none reverse"
-        }
+          toggleActions: "play none none reverse",
+        },
       }
     );
 
     return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, []);
 
