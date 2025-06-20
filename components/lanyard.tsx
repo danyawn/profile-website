@@ -2,12 +2,10 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import {
-  Mail,
-  Phone,
-  MapPin,
-  Github,
-  Linkedin,
+import { 
+  Mail, 
+  MapPin, 
+  Linkedin, 
   Globe,
   User,
   Code,
