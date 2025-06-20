@@ -2,8 +2,13 @@
 
 import type React from "react";
 import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
 import { AnimatedSection } from "./animated-section";
 import { Briefcase, GraduationCap, Users } from "lucide-react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface TimelineItemProps {
   title: string;
@@ -12,6 +17,7 @@ interface TimelineItemProps {
   description: string[];
   icon: React.ReactNode;
   isLast?: boolean;
+  index: number;
 }
 
 function TimelineItem({
@@ -21,18 +27,120 @@ function TimelineItem({
   description,
   icon,
   isLast = false,
+  index,
 }: TimelineItemProps) {
+  const itemRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = itemRef.current;
+    if (!el) return;
+
+    // Timeline item animation
+    gsap.fromTo(
+      el,
+      {
+        opacity: 0,
+        x: index % 2 === 0 ? -80 : 80,
+        rotateY: index % 2 === 0 ? -15 : 15,
+      },
+      {
+        opacity: 1,
+        x: 0,
+        rotateY: 0,
+        duration: 0.8,
+        delay: index * 0.2,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: el,
+          start: "top 85%",
+          toggleActions: "play none none reverse",
+        },
+      }
+    );
+
+    // Icon animation
+    gsap.fromTo(
+      el.querySelector(".timeline-icon"),
+      {
+        scale: 0,
+        rotate: -180,
+      },
+      {
+        scale: 1,
+        rotate: 0,
+        duration: 0.6,
+        delay: index * 0.2 + 0.3,
+        ease: "back.out(1.7)",
+        scrollTrigger: {
+          trigger: el,
+          start: "top 85%",
+          toggleActions: "play none none reverse",
+        },
+      }
+    );
+
+    // Card content animation
+    gsap.fromTo(
+      el.querySelector(".timeline-card"),
+      {
+        opacity: 0,
+        y: 30,
+        scale: 0.9,
+      },
+      {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 0.6,
+        delay: index * 0.2 + 0.5,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: el,
+          start: "top 85%",
+          toggleActions: "play none none reverse",
+        },
+      }
+    );
+
+    // Description items animation
+    gsap.fromTo(
+      el.querySelectorAll(".desc-item"),
+      {
+        opacity: 0,
+        x: -20,
+      },
+      {
+        opacity: 1,
+        x: 0,
+        duration: 0.4,
+        delay: index * 0.2 + 0.7,
+        ease: "power2.out",
+        stagger: 0.1,
+        scrollTrigger: {
+          trigger: el,
+          start: "top 85%",
+          toggleActions: "play none none reverse",
+        },
+      }
+    );
+
+    return () => {
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
+  }, [index]);
+
   return (
     <motion.div
+      ref={itemRef}
       className="flex gap-4"
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.5 }}
+      whileHover={{
+        scale: 1.02,
+        transition: { duration: 0.2 },
+      }}
     >
       <div className="flex flex-col items-center">
         <motion.div
-          className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center text-primary"
+          className="timeline-icon w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center text-primary"
           whileHover={{
             scale: 1.1,
             backgroundColor: "rgba(139, 92, 246, 0.3)",
@@ -42,15 +150,15 @@ function TimelineItem({
         </motion.div>
         {!isLast && <div className="w-0.5 grow bg-primary/20 mt-2"></div>}
       </div>
-      <div className="bg-card rounded-lg p-6 border border-primary/20 mb-6 flex-1">
+      <div className="timeline-card bg-card rounded-lg p-6 border border-primary/20 mb-6 flex-1">
         <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-2">
           <h3 className="text-lg font-semibold text-white">{title}</h3>
           <span className="text-primary text-sm">{period}</span>
         </div>
         <div className="text-sm text-primary/80 mb-4">{company}</div>
         <ul className="text-gray-400 space-y-2">
-          {description.map((item, index) => (
-            <li key={index} className="flex items-start">
+          {description.map((item, descIndex) => (
+            <li key={descIndex} className="desc-item flex items-start">
               <span className="text-primary mr-2">•</span>
               <span>{item}</span>
             </li>
@@ -62,6 +170,61 @@ function TimelineItem({
 }
 
 export function Experience() {
+  const titleRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = titleRef.current;
+    if (!el) return;
+
+    // Main title animation
+    gsap.fromTo(
+      el.querySelector("h2"),
+      {
+        opacity: 0,
+        y: -40,
+        scale: 0.8,
+      },
+      {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 0.8,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: el,
+          start: "top 85%",
+          toggleActions: "play none none reverse",
+        },
+      }
+    );
+
+    // Section titles animation
+    gsap.fromTo(
+      el.querySelectorAll(".section-title"),
+      {
+        opacity: 0,
+        x: -30,
+      },
+      {
+        opacity: 1,
+        x: 0,
+        duration: 0.6,
+        delay: 0.3,
+        ease: "power2.out",
+        stagger: 0.2,
+        scrollTrigger: {
+          trigger: el,
+          start: "top 85%",
+          toggleActions: "play none none reverse",
+        },
+      }
+    );
+
+    return () => {
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
+  }, []);
+
   const workExperience = [
     {
       title: "Front-end Web Developer",
@@ -208,7 +371,7 @@ export function Experience() {
 
   return (
     <AnimatedSection className="py-16" id="experience">
-      <div className="text-center mb-12">
+      <div className="text-center mb-12" ref={titleRef}>
         <h2 className="text-3xl font-bold mb-4 text-gradient">
           Experience & Education
         </h2>
@@ -220,7 +383,7 @@ export function Experience() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div>
-          <h3 className="text-2xl font-bold mb-6 flex items-center">
+          <h3 className="text-2xl font-bold mb-6 flex items-center section-title">
             <Briefcase className="mr-2 text-primary" size={24} />
             Work Experience
           </h3>
@@ -230,13 +393,14 @@ export function Experience() {
                 key={index}
                 {...item}
                 isLast={index === workExperience.length - 1}
+                index={index}
               />
             ))}
           </div>
         </div>
 
         <div>
-          <h3 className="text-2xl font-bold mb-6 flex items-center">
+          <h3 className="text-2xl font-bold mb-6 flex items-center section-title">
             <GraduationCap className="mr-2 text-primary" size={24} />
             Education
           </h3>
@@ -246,6 +410,7 @@ export function Experience() {
                 key={index}
                 {...item}
                 isLast={index === education.length - 1}
+                index={index}
               />
             ))}
           </div>
@@ -253,7 +418,7 @@ export function Experience() {
       </div>
 
       <div className="mt-12">
-        <h3 className="text-2xl font-bold mb-6 flex items-center">
+        <h3 className="text-2xl font-bold mb-6 flex items-center section-title">
           <Users className="mr-2 text-primary" size={24} />
           Organizational Experience
         </h3>
@@ -263,6 +428,7 @@ export function Experience() {
               key={index}
               {...item}
               isLast={index === organizations.length - 1}
+              index={index}
             />
           ))}
         </div>

@@ -1,16 +1,138 @@
 "use client";
 
 import type React from "react";
-
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "./ui/button";
 import { AnimatedSection } from "./animated-section";
 import { motion } from "framer-motion";
 import { Phone, Mail, MapPin, Send, Loader2 } from "lucide-react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const titleRef = useRef<HTMLDivElement>(null);
+  const contactInfoRef = useRef<HTMLDivElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    const titleEl = titleRef.current;
+    const contactEl = contactInfoRef.current;
+    const formEl = formRef.current;
+    if (!titleEl || !contactEl || !formEl) return;
+
+    // Title animation
+    gsap.fromTo(titleEl.querySelector('h2'),
+      {
+        opacity: 0,
+        y: -30,
+        scale: 0.9
+      },
+      {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 0.8,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: titleEl,
+          start: "top 85%",
+          toggleActions: "play none none reverse"
+        }
+      }
+    );
+
+    // Description animation
+    gsap.fromTo(titleEl.querySelector('p'),
+      {
+        opacity: 0,
+        y: 20
+      },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        delay: 0.3,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: titleEl,
+          start: "top 85%",
+          toggleActions: "play none none reverse"
+        }
+      }
+    );
+
+    // Contact info animation
+    gsap.fromTo(contactEl.querySelectorAll('.contact-item'),
+      {
+        opacity: 0,
+        x: -50,
+        scale: 0.9
+      },
+      {
+        opacity: 1,
+        x: 0,
+        scale: 1,
+        duration: 0.6,
+        ease: "power2.out",
+        stagger: 0.2,
+        scrollTrigger: {
+          trigger: contactEl,
+          start: "top 80%",
+          toggleActions: "play none none reverse"
+        }
+      }
+    );
+
+    // Form animation
+    gsap.fromTo(formEl,
+      {
+        opacity: 0,
+        x: 50,
+        rotateY: 15
+      },
+      {
+        opacity: 1,
+        x: 0,
+        rotateY: 0,
+        duration: 0.8,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: formEl,
+          start: "top 80%",
+          toggleActions: "play none none reverse"
+        }
+      }
+    );
+
+    // Form fields animation
+    gsap.fromTo(formEl.querySelectorAll('.form-field'),
+      {
+        opacity: 0,
+        y: 30
+      },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        ease: "power2.out",
+        stagger: 0.1,
+        delay: 0.3,
+        scrollTrigger: {
+          trigger: formEl,
+          start: "top 80%",
+          toggleActions: "play none none reverse"
+        }
+      }
+    );
+
+    return () => {
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    };
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,7 +158,7 @@ export function ContactForm() {
   return (
     <AnimatedSection className="py-16" id="contact">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
+        <div ref={titleRef} className="text-center mb-12">
           <h2 className="text-3xl font-bold mb-4 text-gradient">
             Let's Get In Touch
           </h2>
@@ -46,14 +168,12 @@ export function ContactForm() {
           </p>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          <div>
+          <div ref={contactInfoRef}>
             <div className="space-y-6">
               <motion.div
-                className="flex items-center gap-4"
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
+                className="contact-item flex items-center gap-4"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.2 }}
               >
                 <motion.div
                   className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center"
@@ -71,11 +191,9 @@ export function ContactForm() {
               </motion.div>
 
               <motion.div
-                className="flex items-center gap-4"
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.1 }}
+                className="contact-item flex items-center gap-4"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.2 }}
               >
                 <motion.div
                   className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center"
@@ -93,11 +211,9 @@ export function ContactForm() {
               </motion.div>
 
               <motion.div
-                className="flex items-center gap-4"
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.2 }}
+                className="contact-item flex items-center gap-4"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.2 }}
               >
                 <motion.div
                   className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center"
@@ -195,13 +311,10 @@ export function ContactForm() {
             </motion.div>
           </div>
 
-          <motion.form
+          <form
+            ref={formRef}
             className="space-y-6"
             onSubmit={handleSubmit}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
           >
             {isSubmitted ? (
               <motion.div
@@ -287,7 +400,7 @@ export function ContactForm() {
                 </Button>
               </>
             )}
-          </motion.form>
+          </form>
         </div>
       </div>
     </AnimatedSection>

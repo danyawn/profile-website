@@ -1,30 +1,30 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { useState, useEffect } from "react"
-import { Menu, X } from "lucide-react"
-import { Button } from "./ui/button"
-import { motion, AnimatePresence } from "framer-motion"
+import Link from "next/link";
+import { useState, useEffect } from "react";
+import { Menu, X } from "lucide-react";
+import { Button } from "./ui/button";
+import { motion, AnimatePresence } from "framer-motion";
 
 export function Navbar() {
-  const [isOpen, setIsOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      const offset = window.scrollY
+      const offset = window.scrollY;
       if (offset > 50) {
-        setScrolled(true)
+        setScrolled(true);
       } else {
-        setScrolled(false)
+        setScrolled(false);
       }
-    }
+    };
 
-    window.addEventListener("scroll", handleScroll)
+    window.addEventListener("scroll", handleScroll);
     return () => {
-      window.removeEventListener("scroll", handleScroll)
-    }
-  }, [])
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   const navVariants = {
     hidden: { opacity: 0, y: -20 },
@@ -36,7 +36,7 @@ export function Navbar() {
         ease: "easeOut",
       },
     },
-  }
+  };
 
   const linkVariants = {
     hidden: { opacity: 0, y: -10 },
@@ -48,7 +48,7 @@ export function Navbar() {
         duration: 0.5,
       },
     }),
-  }
+  };
 
   const mobileMenuVariants = {
     closed: {
@@ -73,12 +73,12 @@ export function Navbar() {
         delayChildren: 0.1,
       },
     },
-  }
+  };
 
   const mobileItemVariants = {
     closed: { opacity: 0, y: -10 },
     open: { opacity: 1, y: 0 },
-  }
+  };
 
   const navLinks = [
     { href: "#services", label: "Services" },
@@ -86,20 +86,24 @@ export function Navbar() {
     { href: "#skills", label: "Skills" },
     { href: "#experience", label: "Experience" },
     // { href: "#testimonials", label: "Testimonials" },
-  ]
+  ];
 
   return (
     <motion.nav
       initial="hidden"
       animate="visible"
       variants={navVariants}
-      className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-md transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-md transition-all duration-300 overflow-x-hidden w-full ${
         scrolled ? "bg-black/90" : "bg-transparent"
       }`}
     >
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
+      <div className="w-full max-w-screen-xl mx-auto px-4">
+        <div className="flex items-center justify-between h-16 w-full overflow-x-hidden">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+          >
             <Link href="/" className="flex-shrink-0">
               <motion.div
                 whileHover={{ scale: 1.05 }}
@@ -121,7 +125,10 @@ export function Navbar() {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Link href={link.href} className="text-white hover:text-primary transition-colors">
+                <Link
+                  href={link.href}
+                  className="text-white hover:text-primary transition-colors"
+                >
                   {link.label}
                 </Link>
               </motion.div>
@@ -154,7 +161,11 @@ export function Navbar() {
             >
               <div className="flex flex-col space-y-4 px-2 pt-2 pb-4">
                 {navLinks.map((link) => (
-                  <motion.div key={link.href} variants={mobileItemVariants} whileTap={{ scale: 0.95 }}>
+                  <motion.div
+                    key={link.href}
+                    variants={mobileItemVariants}
+                    whileTap={{ scale: 0.95 }}
+                  >
                     <Link
                       href={link.href}
                       className="text-white hover:text-primary transition-colors block py-2"
@@ -173,6 +184,5 @@ export function Navbar() {
         </AnimatePresence>
       </div>
     </motion.nav>
-  )
+  );
 }
-

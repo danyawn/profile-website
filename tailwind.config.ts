@@ -51,11 +51,24 @@ const config: Config = {
   				'5': 'hsl(var(--chart-5))'
   			}
   		},
-  		borderRadius: {
-  			lg: 'var(--radius)',
-  			md: 'calc(var(--radius) - 2px)',
-  			sm: 'calc(var(--radius) - 4px)'
-  		}
+  				borderRadius: {
+			lg: 'var(--radius)',
+			md: 'calc(var(--radius) - 2px)',
+			sm: 'calc(var(--radius) - 4px)'
+		},
+		// 3D Transform utilities
+		perspective: {
+			'1000': '1000px',
+		},
+		transform: {
+			'preserve-3d': 'preserve-3d',
+		},
+		backfaceVisibility: {
+			'hidden': 'hidden',
+		},
+		rotate: {
+			'y-180': 'rotateY(180deg)',
+		}
   	}
   },
   plugins: [require("tailwindcss-animate")],

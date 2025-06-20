@@ -27,6 +27,24 @@
   }
 }
 
+html {
+  @apply scroll-smooth;
+  overflow-x: hidden;
+  min-width: 375px;
+  scrollbar-width: none; /* Firefox */
+}
+
+body {
+  overflow-x: hidden;
+  overflow-y: hidden;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+body::-webkit-scrollbar, html::-webkit-scrollbar {
+  display: none;
+}
+
 @layer base {
   * {
     @apply border-border;
@@ -184,4 +202,3 @@
 }
 
 /* Add any other custom styles here */
-
