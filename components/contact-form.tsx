@@ -3,7 +3,7 @@
 import type React from "react";
 import { useState, useEffect, useRef } from "react";
 import { Button } from "./ui/button";
-import { AnimatedSection } from "./animated-section";
+import AnimatedSection from "./animated-section";
 import { motion } from "framer-motion";
 import { Phone, Mail, MapPin, Send, Loader2 } from "lucide-react";
 import { gsap } from "gsap";
@@ -235,7 +235,7 @@ export function ContactForm() {
             </div>
 
             <motion.div
-              className="mt-8 p-6 bg-card rounded-lg border border-primary/20"
+              className="mt-8 p-6 bg-white/5 backdrop-blur-lg rounded-lg border border-white/20 shadow-lg shadow-black/20"
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -318,7 +318,7 @@ export function ContactForm() {
           >
             {isSubmitted ? (
               <motion.div
-                className="bg-primary/20 border border-primary rounded-lg p-6 text-center"
+                className="bg-primary/10 backdrop-blur-lg border border-primary/50 rounded-lg p-6 text-center shadow-lg shadow-black/20"
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ type: "spring", stiffness: 500, damping: 30 }}
@@ -343,10 +343,11 @@ export function ContactForm() {
                   <motion.input
                     type="text"
                     placeholder="First Name"
-                    className="bg-card border border-primary/20 rounded-lg p-3 w-full focus:outline-none"
+                    className="bg-white/5 backdrop-blur-lg border border-white/20 rounded-lg p-3 w-full focus:outline-none shadow-lg shadow-black/10 placeholder-gray-400"
                     whileFocus={{
                       scale: 1.02,
                       borderColor: "rgb(139, 92, 246)",
+                      backgroundColor: "rgba(255, 255, 255, 0.1)",
                     }}
                     whileTap={{ scale: 0.98 }}
                     variants={inputVariants}
@@ -355,10 +356,11 @@ export function ContactForm() {
                   <motion.input
                     type="text"
                     placeholder="Last Name"
-                    className="bg-card border border-primary/20 rounded-lg p-3 w-full focus:outline-none"
+                    className="bg-white/5 backdrop-blur-lg border border-white/20 rounded-lg p-3 w-full focus:outline-none shadow-lg shadow-black/10 placeholder-gray-400"
                     whileFocus={{
                       scale: 1.02,
                       borderColor: "rgb(139, 92, 246)",
+                      backgroundColor: "rgba(255, 255, 255, 0.1)",
                     }}
                     whileTap={{ scale: 0.98 }}
                     variants={inputVariants}
@@ -368,8 +370,12 @@ export function ContactForm() {
                 <motion.input
                   type="email"
                   placeholder="Email"
-                  className="bg-card border border-primary/20 rounded-lg p-3 w-full focus:outline-none"
-                  whileFocus={{ scale: 1.02, borderColor: "rgb(139, 92, 246)" }}
+                  className="bg-white/5 backdrop-blur-lg border border-white/20 rounded-lg p-3 w-full focus:outline-none shadow-lg shadow-black/10 placeholder-gray-400"
+                  whileFocus={{ 
+                    scale: 1.02, 
+                    borderColor: "rgb(139, 92, 246)",
+                    backgroundColor: "rgba(255, 255, 255, 0.1)"
+                  }}
                   whileTap={{ scale: 0.98 }}
                   variants={inputVariants}
                   required
@@ -377,8 +383,12 @@ export function ContactForm() {
                 <motion.textarea
                   placeholder="Message"
                   rows={6}
-                  className="bg-card border border-primary/20 rounded-lg p-3 w-full focus:outline-none resize-none"
-                  whileFocus={{ scale: 1.02, borderColor: "rgb(139, 92, 246)" }}
+                  className="bg-white/5 backdrop-blur-lg border border-white/20 rounded-lg p-3 w-full focus:outline-none resize-none shadow-lg shadow-black/10 placeholder-gray-400"
+                  whileFocus={{ 
+                    scale: 1.02, 
+                    borderColor: "rgb(139, 92, 246)",
+                    backgroundColor: "rgba(255, 255, 255, 0.1)"
+                  }}
                   whileTap={{ scale: 0.98 }}
                   variants={inputVariants}
                   required

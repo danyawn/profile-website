@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef } from "react";
-import { AnimatedSection } from "./animated-section"
+import AnimatedSection from "./animated-section"
 import { StaggeredChildren } from "./staggered-children"
 import { AnimatedSkillBar } from "./animated-skill-bar"
 import { gsap } from "gsap";

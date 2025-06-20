@@ -3,8 +3,8 @@
 import type React from "react";
 import { useEffect, useRef } from "react";
 import { Code, Globe, Smartphone } from "lucide-react";
-import { AnimatedSection } from "./animated-section";
-import { AnimatedCard } from "./animated-card";
+import AnimatedSection from "./animated-section";
+import AnimatedCard from "./animated-card";
 import { motion } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";

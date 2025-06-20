@@ -1,136 +1,147 @@
-import React, { useEffect, useRef, useMemo, ReactNode, RefObject } from "react";
+"use client";
+
+import { useEffect, useRef, ReactNode } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SplitText } from "gsap/SplitText";
 
-gsap.registerPlugin(ScrollTrigger);
-
-interface ScrollRevealProps {
-  children: ReactNode;
-  scrollContainerRef?: RefObject<HTMLElement>;
-  enableBlur?: boolean;
-  baseOpacity?: number;
-  baseRotation?: number;
-  blurStrength?: number;
-  containerClassName?: string;
-  textClassName?: string;
-  rotationEnd?: string;
-  wordAnimationEnd?: string;
+// Register GSAP plugins
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger, SplitText);
 }
 
-const GSAPScrollReveal: React.FC<ScrollRevealProps> = ({
+interface GSAPScrollRevealProps {
+  children: ReactNode;
+  containerClassName?: string;
+  textClassName?: string;
+  baseOpacity?: number;
+  enableBlur?: boolean;
+  baseRotation?: number;
+  blurStrength?: number;
+}
+
+export default function GSAPScrollReveal({
   children,
-  scrollContainerRef,
-  enableBlur = true,
-  baseOpacity = 0.1,
-  baseRotation = 3,
-  blurStrength = 4,
   containerClassName = "",
   textClassName = "",
-  rotationEnd = "bottom bottom",
-  wordAnimationEnd = "bottom bottom",
-}) => {
-  const containerRef = useRef<HTMLHeadingElement>(null);
-
-  const splitText = useMemo(() => {
-    const text = typeof children === "string" ? children : "";
-    return text.split(/(\s+)/).map((word, index) => {
-      if (word.match(/^\s+$/)) return word;
-      return (
-        <span className="inline-block word" key={index}>
-          {word}
-        </span>
-      );
-    });
-  }, [children]);
+  baseOpacity = 0,
+  enableBlur = true,
+  baseRotation = 0,
+  blurStrength = 10,
+}: GSAPScrollRevealProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
+    if (typeof window === "undefined") return;
 
-    const scroller =
-      scrollContainerRef && scrollContainerRef.current
-        ? scrollContainerRef.current
-        : window;
+    const container = containerRef.current;
+    const textElement = textRef.current;
 
-    // Container rotation animation
-    gsap.fromTo(
-      el,
-      { transformOrigin: "0% 50%", rotate: baseRotation },
-      {
-        ease: "none",
-        rotate: 0,
-        scrollTrigger: {
-          trigger: el,
-          scroller,
-          start: "top bottom",
-          end: rotationEnd,
-          scrub: true,
-        },
+    if (!container || !textElement) return;
+
+    let splitText: SplitText | null = null;
+    let scrollTrigger: ScrollTrigger | null = null;
+
+    try {
+      // Try to create SplitText, but fallback gracefully if it fails
+      try {
+        splitText = new SplitText(textElement, {
+          type: "words,chars",
+          wordsClass: "split-word",
+          charsClass: "split-char",
+        });
+      } catch (splitError) {
+        console.warn("SplitText failed, using fallback animation:", splitError);
       }
-    );
 
-    const wordElements = el.querySelectorAll<HTMLElement>(".word");
+      const animationTargets = splitText?.chars || [textElement];
 
-    // Word opacity animation
-    gsap.fromTo(
-      wordElements,
-      { opacity: baseOpacity, willChange: "opacity" },
-      {
-        ease: "none",
-        opacity: 1,
-        stagger: 0.05,
-        scrollTrigger: {
-          trigger: el,
-          scroller,
-          start: "top bottom-=20%",
-          end: wordAnimationEnd,
-          scrub: true,
+      // Set initial state
+      gsap.set(animationTargets, {
+        opacity: baseOpacity,
+        filter: enableBlur ? `blur(${blurStrength}px)` : "none",
+        rotationX: baseRotation,
+        transformOrigin: "center bottom",
+      });
+
+      // Create scroll-triggered animation
+      scrollTrigger = ScrollTrigger.create({
+        trigger: container,
+        start: "top 80%",
+        end: "bottom 20%",
+        onEnter: () => {
+          gsap.to(animationTargets, {
+            opacity: 1,
+            filter: "blur(0px)",
+            rotationX: 0,
+            duration: 1.2,
+            ease: "power3.out",
+            stagger: splitText ? 0.03 : 0,
+          });
         },
+        onLeave: () => {
+          gsap.to(animationTargets, {
+            opacity: baseOpacity,
+            filter: enableBlur ? `blur(${blurStrength}px)` : "none",
+            rotationX: baseRotation,
+            duration: 0.8,
+            ease: "power2.out",
+            stagger: splitText ? 0.02 : 0,
+          });
+        },
+        onEnterBack: () => {
+          gsap.to(animationTargets, {
+            opacity: 1,
+            filter: "blur(0px)",
+            rotationX: 0,
+            duration: 1,
+            ease: "power3.out",
+            stagger: splitText ? 0.02 : 0,
+          });
+        },
+        onLeaveBack: () => {
+          gsap.to(animationTargets, {
+            opacity: baseOpacity,
+            filter: enableBlur ? `blur(${blurStrength}px)` : "none",
+            rotationX: baseRotation,
+            duration: 0.6,
+            ease: "power2.out",
+            stagger: splitText ? 0.01 : 0,
+          });
+        },
+      });
+    } catch (error) {
+      console.error("GSAP ScrollReveal error:", error);
+      // Ensure content is visible even if animation fails
+      if (textElement) {
+        gsap.set(textElement, {
+          opacity: 1,
+          filter: "none",
+          rotationX: 0,
+        });
       }
-    );
-
-    // Word blur animation
-    if (enableBlur) {
-      gsap.fromTo(
-        wordElements,
-        { filter: `blur(${blurStrength}px)` },
-        {
-          ease: "none",
-          filter: "blur(0px)",
-          stagger: 0.05,
-          scrollTrigger: {
-            trigger: el,
-            scroller,
-            start: "top bottom-=20%",
-            end: wordAnimationEnd,
-            scrub: true,
-          },
-        }
-      );
     }
 
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      try {
+        if (scrollTrigger) {
+          scrollTrigger.kill();
+        }
+        if (splitText) {
+          splitText.revert();
+        }
+      } catch (cleanupError) {
+        console.error("Cleanup error:", cleanupError);
+      }
     };
-  }, [
-    scrollContainerRef,
-    enableBlur,
-    baseRotation,
-    baseOpacity,
-    rotationEnd,
-    wordAnimationEnd,
-    blurStrength,
-  ]);
+  }, [baseOpacity, enableBlur, baseRotation, blurStrength]);
 
   return (
-    <h2 ref={containerRef} className={`my-5 ${containerClassName}`}>
-      <p
-        className={`text-[clamp(1.6rem,4vw,3rem)] leading-[1.5] font-semibold ${textClassName}`}
-      >
-        {splitText}
-      </p>
-    </h2>
+    <div ref={containerRef} className={containerClassName}>
+      <div ref={textRef} className={textClassName}>
+        {children}
+      </div>
+    </div>
   );
-};
-
-export default GSAPScrollReveal;
+}

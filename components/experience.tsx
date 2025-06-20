@@ -3,7 +3,7 @@
 import type React from "react";
 import { motion } from "framer-motion";
 import { useEffect, useRef } from "react";
-import { AnimatedSection } from "./animated-section";
+import AnimatedSection from "./animated-section";
 import { Briefcase, GraduationCap, Users } from "lucide-react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -150,7 +150,7 @@ function TimelineItem({
         </motion.div>
         {!isLast && <div className="w-0.5 grow bg-primary/20 mt-2"></div>}
       </div>
-      <div className="timeline-card bg-card rounded-lg p-6 border border-primary/20 mb-6 flex-1">
+      <div className="timeline-card bg-white/5 backdrop-blur-lg rounded-lg p-6 border border-white/20 mb-6 flex-1 shadow-lg shadow-black/20">
         <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-2">
           <h3 className="text-lg font-semibold text-white">{title}</h3>
           <span className="text-primary text-sm">{period}</span>

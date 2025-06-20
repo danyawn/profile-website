@@ -2,10 +2,10 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { 
-  Mail, 
-  MapPin, 
-  Linkedin, 
+import {
+  Mail,
+  MapPin,
+  Linkedin,
   Globe,
   User,
   Code,
@@ -22,10 +22,10 @@ interface LanyardProps {
 
 // Styling variables
 const LANYARD_CONFIG = {
-  ropeSegments: 6, // Reduced from 12 to make shorter
-  cardWidth: "w-80 sm:w-96", // Increased width
-  cardHeight: "h-52 sm:h-60", // Increased height significantly
-  ropeHeight: "h-8", // Back to original h-8
+  ropeSegments: 6,
+  cardWidth: "w-[90vw] max-w-80 sm:w-[400px]",
+  cardHeight: "h-[300px] sm:h-[400px]",
+  ropeHeight: "h-8",
   swingDuration: 3,
   swingAngle: 4,
   swingInterval: 4000,
@@ -87,9 +87,9 @@ export default function Lanyard({}: LanyardProps) {
   };
 
   return (
-    <div className="relative z-0 w-full min-h-[50vh] flex justify-center items-center overflow-hidden">
+    <div className="relative z-0 w-full min-h-screen flex justify-center items-center overflow-hidden px-4">
       {/* Background container with max dimensions */}
-      <div className="relative max-w-[600px] max-h-[700px] w-full h-full flex justify-center items-center">
+      <div className="relative max-w-[650px] max-h-[700px] w-full min-h-[600px] flex justify-center items-center">
         {/* Background gradient */}
         <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black rounded-xl" />
 
@@ -98,7 +98,7 @@ export default function Lanyard({}: LanyardProps) {
         <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-purple-500/20 rounded-full blur-3xl animate-pulse delay-1000" />
 
         {/* Lanyard container */}
-        <div className="relative flex flex-col items-center py-10">
+        <div className="relative flex flex-col items-center py-6 sm:py-10">
           {/* Lanyard rope */}
           <motion.div
             className="relative"
@@ -205,7 +205,7 @@ export default function Lanyard({}: LanyardProps) {
                       </span>
                     </div>
 
-                    <div className="flex flex-col items-center justify-center h-full p-8 text-center">
+                    <div className="flex flex-col items-center justify-center h-full p-4 sm:p-8 text-center">
                       <motion.div
                         className="relative w-24 h-24 mb-4"
                         whileHover={{ scale: 1.1, rotate: 5 }}
@@ -220,14 +220,14 @@ export default function Lanyard({}: LanyardProps) {
                         <div className="absolute -inset-1 bg-gradient-to-r from-primary to-purple-500 rounded-full opacity-20 blur-sm" />
                       </motion.div>
 
-                      <h2 className="text-lg sm:text-xl font-bold text-white mb-2">
+                      <h2 className="text-base sm:text-lg md:text-xl font-bold text-white mb-1 sm:mb-2">
                         {PROFILE_DATA.name}
                       </h2>
-                      <p className="text-sm sm:text-base text-primary font-medium mb-3">
+                      <p className="text-xs sm:text-sm md:text-base text-primary font-medium mb-2 sm:mb-3">
                         {PROFILE_DATA.position}
                       </p>
 
-                      <div className="flex items-center space-x-4 text-xs text-gray-400 mb-3">
+                      <div className="flex items-center justify-center space-x-3 sm:space-x-4 text-xs text-gray-400 mb-2 sm:mb-3">
                         <div className="flex items-center space-x-1">
                           <User className="w-3 h-3" />
                           <span>ID: {PROFILE_DATA.id}</span>
@@ -238,11 +238,11 @@ export default function Lanyard({}: LanyardProps) {
                         </div>
                       </div>
 
-                      <div className="flex flex-wrap justify-center gap-2 mb-4">
+                      <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 mb-3 sm:mb-4">
                         {PROFILE_DATA.skills.map((skill) => (
                           <span
                             key={skill}
-                            className="px-3 py-1.5 text-xs bg-gray-800 text-gray-300 rounded-full border border-gray-700"
+                            className="px-2 sm:px-3 py-1 sm:py-1.5 text-xs bg-gray-800 text-gray-300 rounded-full border border-gray-700"
                           >
                             {skill}
                           </span>
@@ -250,11 +250,13 @@ export default function Lanyard({}: LanyardProps) {
                       </div>
 
                       <motion.div
-                        className="flex items-center space-x-1 text-xs text-gray-500"
+                        className="flex items-center justify-center space-x-1 text-xs text-gray-500"
                         animate={{ opacity: [0.5, 1, 0.5] }}
                         transition={{ duration: 2, repeat: Infinity }}
                       >
-                        <span>Click to flip</span>
+                        <span className="text-xs sm:text-sm">
+                          Click to flip
+                        </span>
                         <motion.div
                           animate={{ rotateY: [0, 180, 360] }}
                           transition={{ duration: 2, repeat: Infinity }}
@@ -282,17 +284,17 @@ export default function Lanyard({}: LanyardProps) {
                       <div className="absolute bottom-4 right-4 w-20 h-20 border border-gray-600 rounded-lg" />
                     </div>
 
-                    <div className="absolute top-6 left-6 right-6 flex justify-between items-center z-10">
+                    <div className="absolute top-4 sm:top-6 left-4 sm:left-6 right-4 sm:right-6 flex justify-between items-center z-10">
                       <div className="flex items-center space-x-2">
-                        <Mail className="w-5 h-5 text-primary" />
-                        <span className="text-sm font-semibold text-white">
+                        <Mail className="w-4 sm:w-5 h-4 sm:h-5 text-primary" />
+                        <span className="text-xs sm:text-sm font-semibold text-white">
                           Contact Info
                         </span>
                       </div>
-                      <div className="w-6 h-6 bg-gradient-to-br from-primary to-purple-500 rounded-full" />
+                      <div className="w-5 sm:w-6 h-5 sm:h-6 bg-gradient-to-br from-primary to-purple-500 rounded-full" />
                     </div>
 
-                    <div className="flex flex-col justify-center h-full p-8 pt-20 space-y-4">
+                    <div className="flex flex-col justify-center h-full p-4 sm:p-8 pt-16 sm:pt-20 space-y-3 sm:space-y-4">
                       {CONTACT_DATA.map((contact, index) => {
                         const IconComponent = contact.icon;
                         const content = (
@@ -301,8 +303,10 @@ export default function Lanyard({}: LanyardProps) {
                             className="flex items-center space-x-3 text-gray-300 hover:text-white transition-colors cursor-pointer"
                             whileHover={{ scale: 1.02, x: 5 }}
                           >
-                            <IconComponent className="w-4 h-4 text-primary flex-shrink-0" />
-                            <span className="text-sm">{contact.value}</span>
+                            <IconComponent className="w-3.5 sm:w-4 h-3.5 sm:h-4 text-primary flex-shrink-0" />
+                            <span className="text-xs sm:text-sm">
+                              {contact.value}
+                            </span>
                           </motion.div>
                         );
 
@@ -321,13 +325,13 @@ export default function Lanyard({}: LanyardProps) {
                         );
                       })}
 
-                      <div className="flex justify-center mt-6">
-                        <div className="w-16 h-16 bg-white rounded-lg flex items-center justify-center">
-                          <div className="grid grid-cols-4 gap-px p-2">
+                      <div className="flex justify-center mt-4 sm:mt-6">
+                        <div className="w-12 sm:w-16 h-12 sm:h-16 bg-white rounded-md sm:rounded-lg flex items-center justify-center">
+                          <div className="grid grid-cols-4 gap-px p-1.5 sm:p-2">
                             {Array.from({ length: 16 }).map((_, i) => (
                               <div
                                 key={i}
-                                className={`w-1 h-1 ${
+                                className={`w-0.5 sm:w-1 h-0.5 sm:h-1 ${
                                   Math.random() > 0.5 ? "bg-black" : "bg-white"
                                 }`}
                               />
@@ -345,13 +349,13 @@ export default function Lanyard({}: LanyardProps) {
           </motion.div>
 
           <motion.div
-            className="mt-8 text-center text-gray-400"
+            className="mt-6 sm:mt-8 text-center text-gray-400 px-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 2, duration: 1 }}
           >
             <motion.p
-              className="text-sm mb-2"
+              className="text-xs sm:text-sm mb-1 sm:mb-2"
               animate={{ opacity: [0.6, 1, 0.6] }}
               transition={{ duration: 2, repeat: Infinity }}
             >

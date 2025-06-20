@@ -16,7 +16,7 @@ import DecryptedText from "@/components/decrypted-text";
 import ThreadsBackground from "@/components/threads-background";
 import dynamic from "next/dynamic";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useCallback, useState } from "react";
 import { ChevronDown } from "lucide-react";
 import Image from "next/image";
 
@@ -24,6 +24,8 @@ const Lanyard = dynamic(() => import("@/components/lanyard"), { ssr: false });
 
 export default function Home() {
   const targetRef = useRef<HTMLDivElement>(null);
+  const [isClient, setIsClient] = useState(false);
+  
   const { scrollYProgress } = useScroll({
     target: targetRef,
     offset: ["start start", "end start"],
@@ -33,44 +35,35 @@ export default function Home() {
   const scale = useTransform(scrollYProgress, [0, 1], [1, 0.8]);
   const y = useTransform(scrollYProgress, [0, 1], [0, 100]);
 
+  // Simple client-side check
   useEffect(() => {
-    // Initialize staggered animations for skills
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("animate");
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    document.querySelectorAll(".progress-bar-animation").forEach((el) => {
-      observer.observe(el);
-    });
-
-    document.querySelectorAll(".stagger-item").forEach((el, i) => {
-      el.setAttribute("style", `animation-delay: ${i * 0.1}s`);
-      observer.observe(el);
-    });
-
-    return () => {
-      observer.disconnect();
-    };
+    setIsClient(true);
   }, []);
 
-  const scrollToContent = () => {
-    const servicesSection = document.getElementById("services");
-    if (servicesSection) {
-      servicesSection.scrollIntoView({ behavior: "smooth" });
+  // Improved scroll navigation with error handling
+  const scrollToContent = useCallback(() => {
+    try {
+      const servicesSection = document.getElementById("services");
+      if (servicesSection) {
+        servicesSection.scrollIntoView({ 
+          behavior: "smooth",
+          block: "start",
+          inline: "nearest"
+        });
+      }
+    } catch (error) {
+      console.error("Scroll error:", error);
     }
-  };
+  }, []);
 
   // route to cv /cv/resume-dan.pdf
-  const handleDownloadCV = () => {
-    window.open("/cv/resume-dan.pdf", "_blank");
-  };
+  const handleDownloadCV = useCallback(() => {
+    try {
+      window.open("/cv/resume-dan.pdf", "_blank");
+    } catch (error) {
+      console.error("Download CV error:", error);
+    }
+  }, []);
 
   // WhatsApp contact number
   const whatsappNumber = "6282278037765";
@@ -78,32 +71,31 @@ export default function Home() {
   const contactMeMessage = encodeURIComponent(
     "Halo Wayan Danu, saya ingin berdiskusi lebih lanjut mengenai project atau kolaborasi."
   );
+  
   // Handler for Contact Me button
-  const handleContactMe = () => {
-    window.open(
-      `https://wa.me/${whatsappNumber}?text=${contactMeMessage}`,
-      "_blank"
-    );
-  };
-  // Handler for Send Message (for form, can be reused)
-  const sendMessageToWhatsapp = (message: string) => {
-    const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-      message
-    )}`;
-    window.open(url, "_blank");
-  };
+  const handleContactMe = useCallback(() => {
+    try {
+      window.open(
+        `https://wa.me/${whatsappNumber}?text=${contactMeMessage}`,
+        "_blank"
+      );
+    } catch (error) {
+      console.error("Contact error:", error);
+    }
+  }, [contactMeMessage]);
 
   return (
-    <main className=" bg-black text-white relative overflow-x-hidden overflow-y-hidden">
+    <main className="bg-black/90 text-white relative overflow-x-hidden overflow-y-hidden">
       {/* Animated Background */}
       <ThreadsBackground className="opacity-40" />
 
-      <AnimatedCursor />
+      {isClient && <AnimatedCursor />}
       <Navbar />
 
       {/* Hero Section */}
       <motion.section
         ref={targetRef}
+        id="hero"
         className="relative min-h-screen flex items-center justify-center overflow-hidden py-16 md:py-0"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -127,14 +119,14 @@ export default function Home() {
 
         <motion.div
           className="container mx-auto px-4 sm:px-6 lg:px-10 z-10 relative"
-          style={{ opacity, scale, y }}
+          style={isClient ? { opacity, scale, y } : {}}
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             <motion.div
+              className="mt-16 sm:mt-24 lg:mt-0 text-center lg:text-left"
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="mt-16 sm:mt-24 lg:mt-0 text-center lg:text-left"
             >
               <motion.h1
                 className="text-3xl sm:text-4xl lg:text-6xl font-bold mb-4"
@@ -142,31 +134,42 @@ export default function Home() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
               >
-                <DecryptedText
-                  text="I am Wayan Danu Tirta"
-                  animateOn="view"
-                  speed={80}
-                  sequential={true}
-                  revealDirection="start"
-                  className="text-white"
-                  encryptedClassName="text-primary/50"
-                />
-                <motion.span
-                  className="block text-gradient mt-2"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.6 }}
-                >
-                  <DecryptedText
-                    text="Full-stack Web Developer & Software Engineer"
-                    animateOn="view"
-                    speed={60}
-                    sequential={true}
-                    revealDirection="start"
-                    className="text-gradient"
-                    encryptedClassName="text-primary/30"
-                  />
-                </motion.span>
+                {isClient ? (
+                  <>
+                    <DecryptedText
+                      text="I am Wayan Danu Tirta"
+                      animateOn="view"
+                      speed={80}
+                      sequential={true}
+                      revealDirection="start"
+                      className="text-white"
+                      encryptedClassName="text-primary/50"
+                    />
+                    <motion.span
+                      className="block text-gradient mt-2"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.8, delay: 0.6 }}
+                    >
+                      <DecryptedText
+                        text="Full-stack Web Developer & Software Engineer"
+                        animateOn="view"
+                        speed={60}
+                        sequential={true}
+                        revealDirection="start"
+                        className="text-gradient"
+                        encryptedClassName="text-primary/30"
+                      />
+                    </motion.span>
+                  </>
+                ) : (
+                  <>
+                    <span className="text-white">I am Wayan Danu Tirta</span>
+                    <span className="block text-gradient mt-2">
+                      Full-stack Web Developer & Software Engineer
+                    </span>
+                  </>
+                )}
               </motion.h1>
               <motion.div
                 className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
@@ -232,19 +235,21 @@ export default function Home() {
           </div>
         </motion.div>
 
-        <motion.div
-          className="absolute bottom-4 sm:bottom-10  left-[45%] -translate-x-[50%] cursor-pointer scroll-down-indicator flex justify-center items-center"
+        <motion.button
+          className="absolute bottom-4 sm:bottom-10 left-[45%] -translate-x-[50%] cursor-pointer scroll-down-indicator flex justify-center items-center"
           onClick={scrollToContent}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5, duration: 0.5 }}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
         >
           <ChevronDown className="text-primary h-8 w-8 sm:h-10 sm:w-10" />
-        </motion.div>
+        </motion.button>
       </motion.section>
 
       {/* Description Section */}
-      <section className="py-20 bg-black relative z-10">
+      <section className="py-20 bg-black/80 relative z-10">
         <div className="container mx-auto px-4 sm:px-6 lg:px-10">
           <GSAPScrollReveal
             baseOpacity={0}
@@ -285,7 +290,7 @@ export default function Home() {
       </section>
 
       {/* Services Section with Advanced Reveal */}
-      <section className="py-20 bg-black relative z-10">
+      <section className="py-20 bg-transparent relative z-10">
         <div className="container mx-auto px-4 sm:px-6 lg:px-10">
           <AdvancedScrollReveal
             baseOpacity={0}
@@ -308,7 +313,7 @@ export default function Home() {
         <Services />
 
         {/* Projects Section with GSAP Reveal */}
-        <section className="py-20">
+        <section className="py-20" id="works">
           <GSAPScrollReveal
             baseOpacity={0}
             enableBlur={true}
@@ -319,9 +324,8 @@ export default function Home() {
           >
             Featured Projects & Portfolio
           </GSAPScrollReveal>
+          <Projects />
         </section>
-
-        <Projects />
 
         {/* Skills Section with Advanced Reveal */}
         <section className="py-20">
@@ -374,13 +378,13 @@ export default function Home() {
         </section>
         <ContactForm />
         {/* Lanyard 3D Section */}
-        <section className="relative z-10 w-full  flex items-center justify-center">
+        <section className="relative z-10 w-full flex items-center justify-center">
           <Lanyard position={[0, 0, 20]} gravity={[0, -40, 0]} />
         </section>
       </div>
 
       {/* Footer */}
-      <footer className="bg-card mt-20 relative z-10">
+      <footer className="bg-card/80 mt-20 relative z-10">
         <div className="container mx-auto px-10 py-12">
           {/* Footer Title Section */}
           <section className="text-center mb-12">
@@ -419,36 +423,60 @@ export default function Home() {
               <h4 className="font-semibold mb-4">Navigation</h4>
               <ul className="space-y-2 text-gray-400">
                 <li>
-                  <a
-                    href="#services"
+                  <button
+                    onClick={() => {
+                      try {
+                        document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
+                      } catch (error) {
+                        console.error('Footer navigation error:', error);
+                      }
+                    }}
                     className="hover:text-primary transition-colors"
                   >
                     Services
-                  </a>
+                  </button>
                 </li>
                 <li>
-                  <a
-                    href="#works"
+                  <button
+                    onClick={() => {
+                      try {
+                        document.getElementById('works')?.scrollIntoView({ behavior: 'smooth' });
+                      } catch (error) {
+                        console.error('Footer navigation error:', error);
+                      }
+                    }}
                     className="hover:text-primary transition-colors"
                   >
                     Works
-                  </a>
+                  </button>
                 </li>
                 <li>
-                  <a
-                    href="#skills"
+                  <button
+                    onClick={() => {
+                      try {
+                        document.getElementById('skills')?.scrollIntoView({ behavior: 'smooth' });
+                      } catch (error) {
+                        console.error('Footer navigation error:', error);
+                      }
+                    }}
                     className="hover:text-primary transition-colors"
                   >
                     Skills
-                  </a>
+                  </button>
                 </li>
                 <li>
-                  <a
-                    href="#experience"
+                  <button
+                    onClick={() => {
+                      try {
+                        document.getElementById('experience')?.scrollIntoView({ behavior: 'smooth' });
+                      } catch (error) {
+                        console.error('Footer navigation error:', error);
+                      }
+                    }}
                     className="hover:text-primary transition-colors"
                   >
                     Experience
-                  </a>
+                  </button>
                 </li>
               </ul>
             </div>

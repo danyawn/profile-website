@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { Button } from "./ui/button";
 import { ExternalLink, Github } from "lucide-react";
-import { AnimatedSection } from "./animated-section";
+import AnimatedSection from "./animated-section";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
@@ -112,10 +112,11 @@ function ProjectCard({
   return (
     <motion.div
       ref={cardRef}
-      className="bg-card rounded-lg overflow-hidden group border border-primary/20"
+      className="bg-white/5 backdrop-blur-lg rounded-lg overflow-hidden group border border-white/20 shadow-lg shadow-black/20"
       whileHover={{
         y: -10,
-        boxShadow: "0 20px 25px -5px rgba(139, 92, 246, 0.2)",
+        boxShadow: "0 20px 25px -5px rgba(139, 92, 246, 0.3)",
+        backgroundColor: "rgba(255, 255, 255, 0.1)",
         transition: { duration: 0.2 },
       }}
     >
@@ -260,7 +261,7 @@ export function Projects() {
   ];
 
   return (
-    <AnimatedSection className="py-16" id="works">
+    <AnimatedSection className="py-16">
       <div ref={titleRef} className="text-center mb-12">
         <h2 className="text-3xl font-bold mb-4 text-gradient">
           Featured Projects

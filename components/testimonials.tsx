@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import { Quote } from "lucide-react"
-import { AnimatedSection } from "./animated-section"
+import AnimatedSection from "./animated-section"
 import { motion } from "framer-motion"
 import { useState } from "react"
 
