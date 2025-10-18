@@ -1,6 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
+    unoptimized: true,
+    domains: [
+      'placehold.co',
+      'images.unsplash.com',
+    ],
     remotePatterns: [
       {
         protocol: 'https',
