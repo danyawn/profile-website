@@ -2,9 +2,10 @@
 
 import Image from "next/image"
 import { Quote } from "lucide-react"
-import AnimatedSection from "./animated-section"
+import AnimatedSection from "../../components/animated-section"
 import { motion } from "framer-motion"
 import { useState } from "react"
+import { testimonials } from "@/data"
 
 interface TestimonialProps {
   content: string
@@ -18,7 +19,7 @@ interface TestimonialProps {
 function TestimonialCard({ content, author, position, image, active, onClick }: TestimonialProps) {
   return (
     <motion.div
-      className={`bg-card rounded-lg p-6 border cursor-pointer transition-all duration-500 ${
+      className={`card-glass-hover p-6 cursor-pointer transition-all duration-500 ${
         active ? "border-primary scale-100 opacity-100" : "border-primary/20 scale-95 opacity-70"
       }`}
       onClick={onClick}
@@ -52,37 +53,6 @@ function TestimonialCard({ content, author, position, image, active, onClick }: 
 
 export function Testimonials() {
   const [activeIndex, setActiveIndex] = useState(0)
-
-  const testimonials = [
-    {
-      author: "Sarah Johnson",
-      position: "CEO at TechStart",
-      image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&auto=format&fit=crop&q=60",
-      content:
-        "Working with Wayan was an absolute pleasure. His attention to detail and creative solutions made our project a success. He consistently delivered high-quality work ahead of schedule.",
-    },
-    {
-      author: "Michael Chen",
-      position: "Product Manager",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&auto=format&fit=crop&q=60",
-      content:
-        "Exceptional work! Wayan delivered beyond our expectations and was always responsive to our needs. His technical skills and problem-solving abilities are impressive.",
-    },
-    {
-      author: "Emily Rodriguez",
-      position: "Marketing Director",
-      image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=400&auto=format&fit=crop&q=60",
-      content:
-        "Wayan's work on our website redesign was outstanding. He understood our vision perfectly and implemented it with creativity and technical excellence. Highly recommended!",
-    },
-    {
-      author: "David Kim",
-      position: "Startup Founder",
-      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&auto=format&fit=crop&q=60",
-      content:
-        "As a startup founder, finding reliable developers is crucial. Wayan exceeded all expectations with his professionalism, communication skills, and technical expertise.",
-    },
-  ]
 
   return (
     <AnimatedSection className="py-16" id="testimonials">

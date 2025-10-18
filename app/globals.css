@@ -36,7 +36,7 @@ html {
 
 body {
   overflow-x: hidden;
-  overflow-y: hidden;
+  overflow-y: auto;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
@@ -199,6 +199,85 @@ body::-webkit-scrollbar, html::-webkit-scrollbar {
 .page-transition-exit-active {
   opacity: 0;
   transition: opacity 300ms;
+}
+
+/* Fixed background that doesn't respond to scroll */
+.threads-background-fixed {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: -10 !important;
+  pointer-events: none !important;
+  will-change: auto !important;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Reusable Section Backgrounds */
+.section-gradient-primary {
+  @apply bg-gradient-to-r from-primary/10 to-purple-500/10;
+}
+
+.section-gradient-dark {
+  @apply bg-gradient-to-b from-black/80 to-black/60;
+}
+
+.section-gradient-subtle {
+  @apply bg-gradient-to-br from-primary/5 to-transparent;
+}
+
+.section-overlay-dark {
+  @apply bg-black/80 backdrop-blur-sm;
+}
+
+.section-overlay-light {
+  @apply bg-white/5 backdrop-blur-sm;
+}
+
+/* Reusable Card Styles */
+.card-glass {
+  @apply bg-white/5 backdrop-blur-lg rounded-lg border border-white/20 shadow-lg shadow-black/20;
+}
+
+.card-glass-hover {
+  @apply card-glass hover:border-primary/50 hover:shadow-primary/20 transition-all duration-300;
+}
+
+.card-gradient {
+  @apply bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md rounded-xl border border-white/30;
+}
+
+/* Icon Containers */
+.icon-container {
+  @apply w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center text-primary;
+}
+
+.icon-container-hover {
+  @apply icon-container hover:bg-primary/30 hover:scale-110 transition-all duration-200;
+}
+
+.icon-container-lg {
+  @apply w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center text-primary;
+}
+
+/* Contact Item Styles */
+.contact-item {
+  @apply flex items-center gap-4 p-4 card-glass-hover;
+}
+
+/* Timeline Styles */
+.timeline-icon {
+  @apply w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center text-primary;
+}
+
+.timeline-card {
+  @apply card-glass-hover p-6 mb-6 flex-1;
+}
+
+.timeline-line {
+  @apply w-0.5 h-full bg-gradient-to-b from-primary/50 to-transparent mt-2;
 }
 
 /* Add any other custom styles here */

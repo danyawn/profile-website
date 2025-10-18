@@ -2,70 +2,27 @@
 
 import type React from "react";
 import { useState, useEffect, useRef } from "react";
-import { Button } from "./ui/button";
-import AnimatedSection from "./animated-section";
+import { Button } from "../../components/ui/button";
+import AnimatedSection from "../../components/animated-section";
 import { motion } from "framer-motion";
 import { Phone, Mail, MapPin, Send, Loader2 } from "lucide-react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import AnimatedTitle from "@/components/animated-title";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const titleRef = useRef<HTMLDivElement>(null);
   const contactInfoRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
-    const titleEl = titleRef.current;
     const contactEl = contactInfoRef.current;
     const formEl = formRef.current;
-    if (!titleEl || !contactEl || !formEl) return;
+    if (!contactEl || !formEl) return;
 
-    // Title animation
-    gsap.fromTo(titleEl.querySelector('h2'),
-      {
-        opacity: 0,
-        y: -30,
-        scale: 0.9
-      },
-      {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        duration: 0.8,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: titleEl,
-          start: "top 85%",
-          toggleActions: "play none none reverse"
-        }
-      }
-    );
-
-    // Description animation
-    gsap.fromTo(titleEl.querySelector('p'),
-      {
-        opacity: 0,
-        y: 20
-      },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.6,
-        delay: 0.3,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: titleEl,
-          start: "top 85%",
-          toggleActions: "play none none reverse"
-        }
-      }
-    );
-
-    // Contact info animation
     gsap.fromTo(contactEl.querySelectorAll('.contact-item'),
       {
         opacity: 0,
@@ -87,7 +44,6 @@ export function ContactForm() {
       }
     );
 
-    // Form animation
     gsap.fromTo(formEl,
       {
         opacity: 0,
@@ -108,7 +64,6 @@ export function ContactForm() {
       }
     );
 
-    // Form fields animation
     gsap.fromTo(formEl.querySelectorAll('.form-field'),
       {
         opacity: 0,
@@ -138,30 +93,26 @@ export function ContactForm() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSubmitted(true);
 
-      // Reset form after showing success message
       setTimeout(() => {
         setIsSubmitted(false);
       }, 3000);
     }, 1500);
   };
 
-  const inputVariants = {
-    focus: { scale: 1.02, borderColor: "rgba(139, 92, 246, 0.8)" },
-    blur: { scale: 1, borderColor: "rgba(139, 92, 246, 0.2)" },
-  };
-
   return (
     <AnimatedSection className="py-16" id="contact">
       <div className="container mx-auto px-4">
-        <div ref={titleRef} className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4 text-gradient">
+        <div className="text-center mb-12">
+          <AnimatedTitle
+            containerClassName="mb-4"
+            textClassName="text-3xl font-bold text-gradient"
+          >
             Let's Get In Touch
-          </h2>
+          </AnimatedTitle>
           <p className="text-gray-400 max-w-2xl mx-auto">
             Have a project in mind or want to discuss potential opportunities?
             I'm just a message away.
@@ -350,7 +301,6 @@ export function ContactForm() {
                       backgroundColor: "rgba(255, 255, 255, 0.1)",
                     }}
                     whileTap={{ scale: 0.98 }}
-                    variants={inputVariants}
                     required
                   />
                   <motion.input
@@ -363,7 +313,6 @@ export function ContactForm() {
                       backgroundColor: "rgba(255, 255, 255, 0.1)",
                     }}
                     whileTap={{ scale: 0.98 }}
-                    variants={inputVariants}
                     required
                   />
                 </div>
@@ -377,7 +326,6 @@ export function ContactForm() {
                     backgroundColor: "rgba(255, 255, 255, 0.1)"
                   }}
                   whileTap={{ scale: 0.98 }}
-                  variants={inputVariants}
                   required
                 />
                 <motion.textarea
@@ -390,7 +338,6 @@ export function ContactForm() {
                     backgroundColor: "rgba(255, 255, 255, 0.1)"
                   }}
                   whileTap={{ scale: 0.98 }}
-                  variants={inputVariants}
                   required
                 />
                 <Button

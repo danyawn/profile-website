@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import Script from "next/script";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -14,7 +15,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://wayandanutirta.dev'),
+  metadataBase: new URL("https://yan-danu.netlify.app"),
   title: "Wayan Danu Tirta | Full-stack Web Developer & Software Engineer",
   description:
     "Professional Full-stack Web Developer and Software Engineer from Yogyakarta, Indonesia. Specializing in React.js, Next.js, Node.js, AWS Cloud Services, and modern web technologies. Expert in building scalable web applications with exceptional user experiences.",
@@ -155,18 +156,18 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <head>
-        <script
+      <body
+        suppressHydrationWarning
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        {children}
+        <Script
+          id="structured-data"
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(structuredData),
           }}
         />
-      </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
       </body>
     </html>
   );

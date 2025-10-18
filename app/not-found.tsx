@@ -3,7 +3,7 @@
 
 import React from "react";
 import Link from "next/link";
-import FuzzyText from "./FuzzyText";
+import FuzzyText from "../components/fuzzy-text";
 
 const NotFoundPage: React.FC = () => {
   // hover effect state

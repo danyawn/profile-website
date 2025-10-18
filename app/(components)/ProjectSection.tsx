@@ -1,14 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import { Button } from "./ui/button";
-import { ExternalLink, Github } from "lucide-react";
-import AnimatedSection from "./animated-section";
+import AnimatedSection from "../../components/animated-section";
 import { motion } from "framer-motion";
-import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { projects } from "@/data";
+import AnimatedTitle from "@/components/animated-title";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -16,8 +15,6 @@ interface ProjectProps {
   title: string;
   description: string;
   image: string;
-  demoLink: string;
-  githubLink: string;
   tags: string[];
   index: number;
 }
@@ -26,8 +23,6 @@ function ProjectCard({
   title,
   description,
   image,
-  demoLink,
-  githubLink,
   tags,
   index,
 }: ProjectProps) {
@@ -37,7 +32,6 @@ function ProjectCard({
     const el = cardRef.current;
     if (!el) return;
 
-    // Card animation with stagger
     gsap.fromTo(el,
       {
         opacity: 0,
@@ -51,7 +45,7 @@ function ProjectCard({
         rotateY: 0,
         scale: 1,
         duration: 0.8,
-        delay: (index % 3) * 0.2, // Stagger by row
+        delay: (index % 3) * 0.2,
         ease: "power2.out",
         scrollTrigger: {
           trigger: el,
@@ -61,7 +55,6 @@ function ProjectCard({
       }
     );
 
-    // Image animation
     gsap.fromTo(el.querySelector('.project-image'),
       {
         scale: 1.2,
@@ -81,7 +74,6 @@ function ProjectCard({
       }
     );
 
-    // Tags animation
     gsap.fromTo(el.querySelectorAll('.tag'),
       {
         opacity: 0,
@@ -112,7 +104,7 @@ function ProjectCard({
   return (
     <motion.div
       ref={cardRef}
-      className="bg-white/5 backdrop-blur-lg rounded-lg overflow-hidden group border border-white/20 shadow-lg shadow-black/20"
+      className="card-glass-hover overflow-hidden group"
       whileHover={{
         y: -10,
         boxShadow: "0 20px 25px -5px rgba(139, 92, 246, 0.3)",
@@ -151,121 +143,15 @@ function ProjectCard({
 }
 
 export function Projects() {
-  const titleRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const el = titleRef.current;
-    if (!el) return;
-
-    // Title animation
-    gsap.fromTo(el.querySelector('h2'),
-      {
-        opacity: 0,
-        y: -40,
-        scale: 0.8
-      },
-      {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        duration: 0.8,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: el,
-          start: "top 85%",
-          toggleActions: "play none none reverse"
-        }
-      }
-    );
-
-    // Description animation
-    gsap.fromTo(el.querySelector('p'),
-      {
-        opacity: 0,
-        y: 20
-      },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.6,
-        delay: 0.3,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: el,
-          start: "top 85%",
-          toggleActions: "play none none reverse"
-        }
-      }
-    );
-
-    return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-    };
-  }, []);
-
-  const projects = [
-    {
-      title: "FlyWise E-Ticketing System",
-      description:
-        "Full-stack e-ticketing solution with search functionality and passenger data management.",
-      image: "/projects/flywise.png",
-      demoLink: "#",
-      githubLink: "#",
-      tags: ["React", "Node.js", "Express", "PostgreSQL"],
-    },
-    {
-      title: "Car Showcase Website",
-      description:
-        "A car showcase website with a fully responsive design and a modern look.",
-      image: "/projects/car-showcase.png",
-      demoLink: "#",
-      githubLink: "#",
-      tags: ["React", "CSS"],
-    },
-    {
-      title: "AWS Data Analysis Project",
-      description:
-        "Data analysis project using AWS cloud services for processing and visualizing large datasets.",
-      image: "/projects/chatbot-using-aws.png",
-      demoLink: "#",
-      githubLink: "#",
-      tags: ["AWS", "Python", "Data Analysis"],
-    },
-    {
-      title: "Company Profile Website",
-      description:
-        "A company profile website with a clean and modern design and fully functional.",
-      image: "/projects/arahmata-profile.png",
-      demoLink: "#",
-      githubLink: "#",
-      tags: ["React", "Node.js", "Express", "PostgreSQL"],
-    },
-    {
-      title: "Real-Estate Website",
-      description:
-        "A real-estate website with a fully informative and responsive design.",
-      image: "/projects/saeland.png",
-      demoLink: "#",
-      githubLink: "#",
-      tags: ["React", "Node.js", "Express", "PostgreSQL"],
-    },
-    {
-      title: "URL Classification System",
-      description:
-        "A URL classification system that classifies URLs into Benign or Malicious.",
-      image: "/projects/url-classification.png",
-      demoLink: "#",
-      githubLink: "#",
-      tags: ["Python", "Machine Learning"],
-    },
-  ];
-
   return (
     <AnimatedSection className="py-16">
-      <div ref={titleRef} className="text-center mb-12">
-        <h2 className="text-3xl font-bold mb-4 text-gradient">
+      <div className="text-center mb-12">
+        <AnimatedTitle
+          containerClassName="mb-4"
+          textClassName="text-3xl font-bold text-gradient"
+        >
           Featured Projects
-        </h2>
+        </AnimatedTitle>
         <p className="text-gray-400 max-w-2xl mx-auto">
           Explore my latest web development projects. Each project demonstrates
           my commitment to creating innovative and user-friendly digital

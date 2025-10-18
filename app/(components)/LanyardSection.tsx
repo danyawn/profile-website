@@ -12,6 +12,7 @@ import {
   Calendar,
   type LucideIcon,
 } from "lucide-react";
+import { personalInfo } from "@/data";
 
 interface LanyardProps {
   position?: [number, number, number];
@@ -31,17 +32,7 @@ const LANYARD_CONFIG = {
   swingInterval: 4000,
 };
 
-// Profile data
-const PROFILE_DATA = {
-  name: "Wayan Danu Tirta",
-  position: "Software Engineer",
-  id: "WDT2025",
-  year: "2025",
-  skills: ["TypeScript", "React", "Node.js", "Python"],
-  profileImage: "/images/profile_me.jpg",
-};
-
-// Contact data
+// Contact data interface
 interface ContactItem {
   icon: LucideIcon;
   label: string;
@@ -49,29 +40,44 @@ interface ContactItem {
   href?: string;
 }
 
-const CONTACT_DATA: ContactItem[] = [
-  {
-    icon: MapPin,
-    label: "Location",
-    value: "Yogyakarta, Indonesia",
-  },
-  {
-    icon: Linkedin,
-    label: "LinkedIn",
-    value: "linkedin.com/in/wayan-danu-tirta",
-    href: "https://www.linkedin.com/in/wayan-danu-tirta-682465251/",
-  },
-  {
-    icon: Globe,
-    label: "Website",
-    value: "yan-danu.vercel.app",
-    href: "https://yan-danu.vercel.app",
-  },
-];
-
 export default function Lanyard({}: LanyardProps) {
   const [isFlipped, setIsFlipped] = useState(false);
   const [isSwinging, setIsSwinging] = useState(true);
+
+  // Profile data from personalInfo
+  const PROFILE_DATA = {
+    name: personalInfo.name,
+    position: personalInfo.title,
+    id: "WDT2025",
+    year: "2025",
+    skills: ["TypeScript", "React", "Node.js", "Python"],
+    profileImage: personalInfo.website.metaImage,
+  };
+
+  // Contact data from personalInfo
+  const CONTACT_DATA: ContactItem[] = [
+    {
+      icon: MapPin,
+      label: "Location",
+      value: personalInfo.contact.location,
+    },
+    {
+      icon: Linkedin,
+      label: "LinkedIn",
+      value: personalInfo.social.linkedin
+        .replace("https://", "")
+        .replace("www.", ""),
+      href: personalInfo.social.linkedin,
+    },
+    {
+      icon: Globe,
+      label: "Website",
+      value: personalInfo.website.url
+        .replace("https://", "")
+        .replace("www.", ""),
+      href: personalInfo.website.url,
+    },
+  ];
 
   // Auto-swing animation
   useEffect(() => {
@@ -277,7 +283,7 @@ export default function Lanyard({}: LanyardProps) {
                     transform: "rotateY(180deg)",
                   }}
                 >
-                  <div className="w-full h-full bg-gradient-to-br from-gray-900 via-gray-800 to-black rounded-xl shadow-2xl border border-gray-700 overflow-hidden">
+                  <div className="w-full h-full card-gradient rounded-xl shadow-2xl border border-gray-700 overflow-hidden">
                     <div className="absolute inset-0 opacity-10">
                       <div className="absolute inset-0 bg-gradient-to-tl from-primary/30 to-purple-500/30" />
                       <div className="absolute top-4 left-4 w-16 h-16 border border-gray-600 rounded-full" />

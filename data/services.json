@@ -1,0 +1,17 @@
+[
+  {
+    "icon": "Code",
+    "title": "Website Design",
+    "description": "I craft custom stunning, user-friendly, and responsive designs tailored to your needs."
+  },
+  {
+    "icon": "Globe",
+    "title": "Web Development",
+    "description": "Building fast, secure, and scalable web applications using modern technologies."
+  },
+  {
+    "icon": "Smartphone",
+    "title": "Mobile Development",
+    "description": "Creating cross-platform mobile applications with React Native for iOS and Android."
+  }
+]

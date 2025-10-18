@@ -1,31 +1,33 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Stats } from "@/components/stats";
-import { Services } from "@/components/services";
-import { Projects } from "@/components/projects";
-import { Skills } from "@/components/skills";
-// import { Testimonials } from "@/components/testimonials";
-import { Experience } from "@/components/experience";
-import { ContactForm } from "@/components/contact-form";
+import { Stats } from "@/app/(components)/StatsSection";
+import { Services } from "@/app/(components)/ServiceSection";
+import { Projects } from "@/app/(components)/ProjectSection";
+import { Skills } from "@/app/(components)/SkillsSection";
+import { Experience } from "@/app/(components)/ExperienceSection";
+import { ContactForm } from "@/app/(components)/ContactFormSection";
 import { AnimatedCursor } from "@/components/animated-cursor";
-import { Navbar } from "@/components/navbar";
+import { Navbar } from "@/app/(components)/NavbarSection";
 import GSAPScrollReveal from "@/components/gsap-scroll-reveal";
-import AdvancedScrollReveal from "@/components/advanced-scroll-reveal";
 import DecryptedText from "@/components/decrypted-text";
-import ThreadsBackground from "@/components/threads-background";
+import ThreadsBackground from "@/app/(components)/ThreadsBackgroundSection";
 import dynamic from "next/dynamic";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef, useEffect, useCallback, useState } from "react";
+import { useRef, useEffect, useCallback, useState, useMemo } from "react";
 import { ChevronDown } from "lucide-react";
 import Image from "next/image";
+import { personalInfo } from "@/data";
 
-const Lanyard = dynamic(() => import("@/components/lanyard"), { ssr: false });
+const Lanyard = dynamic(() => import("@/app/(components)/LanyardSection"), {
+  ssr: false,
+});
 
-export default function Home() {
+export default function LandingMain() {
   const targetRef = useRef<HTMLDivElement>(null);
   const [isClient, setIsClient] = useState(false);
-  
+  const [reducedMotion, setReducedMotion] = useState(false);
+
   const { scrollYProgress } = useScroll({
     target: targetRef,
     offset: ["start start", "end start"],
@@ -35,109 +37,107 @@ export default function Home() {
   const scale = useTransform(scrollYProgress, [0, 1], [1, 0.8]);
   const y = useTransform(scrollYProgress, [0, 1], [0, 100]);
 
-  // Simple client-side check
   useEffect(() => {
     setIsClient(true);
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReducedMotion(mediaQuery.matches);
+
+    const handleChange = (e: MediaQueryListEvent) =>
+      setReducedMotion(e.matches);
+    mediaQuery.addEventListener("change", handleChange);
+
+    return () => mediaQuery.removeEventListener("change", handleChange);
   }, []);
 
-  // Improved scroll navigation with error handling
   const scrollToContent = useCallback(() => {
     try {
       const servicesSection = document.getElementById("services");
       if (servicesSection) {
-        servicesSection.scrollIntoView({ 
-          behavior: "smooth",
+        servicesSection.scrollIntoView({
+          behavior: reducedMotion ? "auto" : "smooth",
           block: "start",
-          inline: "nearest"
+          inline: "nearest",
         });
       }
     } catch (error) {
       console.error("Scroll error:", error);
     }
-  }, []);
+  }, [reducedMotion]);
 
-  // route to cv /cv/resume-dan.pdf
   const handleDownloadCV = useCallback(() => {
     try {
-      window.open("/cv/resume-dan.pdf", "_blank");
+      window.open(personalInfo.cv.path, "_blank");
     } catch (error) {
       console.error("Download CV error:", error);
     }
   }, []);
 
-  // WhatsApp contact number
-  const whatsappNumber = "6282278037765";
-  // Template message for Contact Me
-  const contactMeMessage = encodeURIComponent(
-    "Halo Wayan Danu, saya ingin berdiskusi lebih lanjut mengenai project atau kolaborasi."
-  );
-  
-  // Handler for Contact Me button
   const handleContactMe = useCallback(() => {
     try {
+      const contactMeMessage = encodeURIComponent(
+        personalInfo.contact.whatsappMessage
+      );
       window.open(
-        `https://wa.me/${whatsappNumber}?text=${contactMeMessage}`,
+        `https://wa.me/${personalInfo.contact.whatsapp}?text=${contactMeMessage}`,
         "_blank"
       );
     } catch (error) {
       console.error("Contact error:", error);
     }
-  }, [contactMeMessage]);
+  }, []);
+
+  const shouldShowAnimations = useMemo(() => !reducedMotion, [reducedMotion]);
 
   return (
-    <main className="bg-black/90 text-white relative overflow-x-hidden overflow-y-hidden">
-      {/* Animated Background */}
-      <ThreadsBackground className="opacity-40" />
+    <main className=" text-white relative overflow-x-hidden">
+      {shouldShowAnimations && <ThreadsBackground className="opacity-60" />}
 
-      {isClient && <AnimatedCursor />}
+      {isClient && shouldShowAnimations && <AnimatedCursor />}
       <Navbar />
 
-      {/* Hero Section */}
       <motion.section
         ref={targetRef}
         id="hero"
-        className="relative min-h-screen flex items-center justify-center overflow-hidden py-16 md:py-0"
+        className="relative min-h-screen flex items-center justify-center overflow-hidden py-16 md:py-0 z-10"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1 }}
+        transition={{ duration: reducedMotion ? 0.1 : 1 }}
       >
         <motion.div
-          className="absolute inset-0 bg-gradient-to-b from-primary/20 to-transparent opacity-50"
-          style={{
-            backgroundSize: "400% 400%",
-            backgroundPosition: "0% 50%",
-          }}
-          animate={{
-            backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-          }}
-          transition={{
-            duration: 15,
-            repeat: Number.POSITIVE_INFINITY,
-            repeatType: "reverse",
-          }}
-        />
-
-        <motion.div
           className="container mx-auto px-4 sm:px-6 lg:px-10 z-10 relative"
-          style={isClient ? { opacity, scale, y } : {}}
+          style={isClient && shouldShowAnimations ? { opacity, scale, y } : {}}
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             <motion.div
               className="mt-16 sm:mt-24 lg:mt-0 text-center lg:text-left"
-              initial={{ opacity: 0, x: -50 }}
+              initial={
+                shouldShowAnimations
+                  ? { opacity: 0, x: -50 }
+                  : { opacity: 1, x: 0 }
+              }
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={{
+                duration: reducedMotion ? 0.1 : 0.8,
+                delay: reducedMotion ? 0 : 0.2,
+              }}
             >
               <motion.h1
                 className="text-3xl sm:text-4xl lg:text-6xl font-bold mb-4"
-                initial={{ opacity: 0, y: 20 }}
+                initial={
+                  shouldShowAnimations
+                    ? { opacity: 0, y: 20 }
+                    : { opacity: 1, y: 0 }
+                }
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
+                transition={{
+                  duration: reducedMotion ? 0.1 : 0.8,
+                  delay: reducedMotion ? 0 : 0.4,
+                }}
               >
-                {isClient ? (
+                {isClient && shouldShowAnimations ? (
                   <>
                     <DecryptedText
-                      text="I am Wayan Danu Tirta"
+                      text={`I am ${personalInfo.name}`}
                       animateOn="view"
                       speed={80}
                       sequential={true}
@@ -152,7 +152,7 @@ export default function Home() {
                       transition={{ duration: 0.8, delay: 0.6 }}
                     >
                       <DecryptedText
-                        text="Full-stack Web Developer & Software Engineer"
+                        text={personalInfo.title}
                         animateOn="view"
                         speed={60}
                         sequential={true}
@@ -164,18 +164,25 @@ export default function Home() {
                   </>
                 ) : (
                   <>
-                    <span className="text-white">I am Wayan Danu Tirta</span>
+                    <span className="text-white">I am {personalInfo.name}</span>
                     <span className="block text-gradient mt-2">
-                      Full-stack Web Developer & Software Engineer
+                      {personalInfo.title}
                     </span>
                   </>
                 )}
               </motion.h1>
               <motion.div
                 className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
-                initial={{ opacity: 0, y: 20 }}
+                initial={
+                  shouldShowAnimations
+                    ? { opacity: 0, y: 20 }
+                    : { opacity: 1, y: 0 }
+                }
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 1 }}
+                transition={{
+                  duration: reducedMotion ? 0.1 : 0.8,
+                  delay: reducedMotion ? 0 : 1,
+                }}
               >
                 <Button
                   size="lg"
@@ -196,29 +203,37 @@ export default function Home() {
             </motion.div>
             <motion.div
               className="relative order-first lg:order-last w-full max-w-xs sm:max-w-sm md:max-w-md mx-auto px-4"
-              initial={{ opacity: 0, scale: 0.8 }}
+              initial={
+                shouldShowAnimations
+                  ? { opacity: 0, scale: 0.8 }
+                  : { opacity: 1, scale: 1 }
+              }
               animate={{ opacity: 1, scale: 1 }}
               transition={{
-                duration: 0.8,
-                delay: 0.6,
-                type: "spring",
+                duration: reducedMotion ? 0.1 : 0.8,
+                delay: reducedMotion ? 0 : 0.6,
+                type: reducedMotion ? "tween" : "spring",
                 stiffness: 100,
               }}
             >
               <div className="relative aspect-square w-full">
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/30 to-purple-500/30 rounded-full blur-3xl animate-pulse-slow" />
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/30 to-purple-500/30 rounded-full blur-3xl" />
                 <motion.div
                   className="relative aspect-square w-full rounded-2xl overflow-hidden"
-                  animate={{
-                    boxShadow: [
-                      "0 0 20px 10px rgba(139, 92, 246, 0.3)",
-                      "0 0 20px 15px rgba(139, 92, 246, 0.4)",
-                      "0 0 20px 10px rgba(139, 92, 246, 0.3)",
-                    ],
-                  }}
+                  animate={
+                    shouldShowAnimations
+                      ? {
+                          boxShadow: [
+                            "0 0 20px 10px rgba(139, 92, 246, 0.3)",
+                            "0 0 20px 15px rgba(139, 92, 246, 0.4)",
+                            "0 0 20px 10px rgba(139, 92, 246, 0.3)",
+                          ],
+                        }
+                      : {}
+                  }
                   transition={{
                     duration: 4,
-                    repeat: Number.POSITIVE_INFINITY,
+                    repeat: shouldShowAnimations ? Number.POSITIVE_INFINITY : 0,
                     repeatType: "reverse",
                   }}
                 >
@@ -240,22 +255,25 @@ export default function Home() {
           onClick={scrollToContent}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.5, duration: 0.5 }}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
+          transition={{
+            delay: reducedMotion ? 0 : 1.5,
+            duration: reducedMotion ? 0.1 : 0.5,
+          }}
+          whileHover={shouldShowAnimations ? { scale: 1.1 } : {}}
+          whileTap={shouldShowAnimations ? { scale: 0.9 } : {}}
         >
           <ChevronDown className="text-primary h-8 w-8 sm:h-10 sm:w-10" />
         </motion.button>
       </motion.section>
 
       {/* Description Section */}
-      <section className="py-20 bg-black/80 relative z-10">
+      <section className="py-20 relative z-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-10">
           <GSAPScrollReveal
             baseOpacity={0}
-            enableBlur={true}
-            baseRotation={5}
-            blurStrength={10}
+            enableBlur={shouldShowAnimations}
+            baseRotation={shouldShowAnimations ? 5 : 0}
+            blurStrength={shouldShowAnimations ? 10 : 0}
             containerClassName="text-center max-w-4xl mx-auto"
             textClassName="text-gray-300"
           >
@@ -266,18 +284,18 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="relative z-10">
+      <div className="relative z-20">
         <Stats />
       </div>
 
       {/* Expertise Highlight Section */}
-      <section className="py-16 bg-gradient-to-r from-primary/10 to-purple-500/10 relative z-10">
+      <section className="py-16 section-gradient-primary relative z-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-10">
           <GSAPScrollReveal
             baseOpacity={0}
-            enableBlur={true}
-            baseRotation={-2}
-            blurStrength={8}
+            enableBlur={shouldShowAnimations}
+            baseRotation={shouldShowAnimations ? -2 : 0}
+            blurStrength={shouldShowAnimations ? 8 : 0}
             containerClassName="text-center max-w-5xl mx-auto"
             textClassName="text-lg md:text-xl text-gray-300 leading-relaxed"
           >
@@ -289,117 +307,21 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Services Section with Advanced Reveal */}
-      <section className="py-20 bg-transparent relative z-10">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-10">
-          <AdvancedScrollReveal
-            baseOpacity={0}
-            enableBlur={true}
-            baseRotation={3}
-            blurStrength={8}
-            containerClassName="text-center max-w-3xl mx-auto mb-16"
-            textClassName="text-2xl md:text-3xl font-bold text-white"
-            animationType="word"
-            animationDirection="up"
-            staggerDelay={0.08}
-          >
-            What I Do Best
-          </AdvancedScrollReveal>
-        </div>
-      </section>
-
-      {/* Other Sections */}
-      <div className="w-full max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-10 relative z-10 overflow-x-hidden">
+      <div className="w-full max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-10 relative z-20 overflow-x-hidden">
+        <Projects />
         <Services />
-
-        {/* Projects Section with GSAP Reveal */}
-        <section className="py-20" id="works">
-          <GSAPScrollReveal
-            baseOpacity={0}
-            enableBlur={true}
-            baseRotation={4}
-            blurStrength={12}
-            containerClassName="text-center max-w-4xl mx-auto mb-16"
-            textClassName="text-2xl md:text-3xl font-bold text-gradient"
-          >
-            Featured Projects & Portfolio
-          </GSAPScrollReveal>
-          <Projects />
-        </section>
-
-        {/* Skills Section with Advanced Reveal */}
-        <section className="py-20">
-          <AdvancedScrollReveal
-            baseOpacity={0}
-            enableBlur={true}
-            baseRotation={-3}
-            blurStrength={10}
-            containerClassName="text-center max-w-3xl mx-auto mb-16"
-            textClassName="text-2xl md:text-3xl font-bold text-primary"
-            animationType="char"
-            animationDirection="left"
-            staggerDelay={0.03}
-          >
-            Technical Expertise & Skills
-          </AdvancedScrollReveal>
-        </section>
-
         <Skills />
-
-        {/* Experience Section with GSAP Reveal */}
-        <section className="py-20">
-          <GSAPScrollReveal
-            baseOpacity={0}
-            enableBlur={true}
-            baseRotation={5}
-            blurStrength={15}
-            containerClassName="text-center max-w-4xl mx-auto mb-16"
-            textClassName="text-2xl md:text-3xl font-bold text-white"
-          >
-            Professional Journey & Background
-          </GSAPScrollReveal>
-        </section>
-
         <Experience />
-        {/* <Testimonials /> */}
-
-        {/* Contact Section with GSAP Reveal */}
-        <section className="py-20">
-          <GSAPScrollReveal
-            baseOpacity={0}
-            enableBlur={true}
-            baseRotation={2}
-            blurStrength={12}
-            containerClassName="text-center max-w-3xl mx-auto mb-16"
-            textClassName="text-2xl md:text-3xl font-bold text-gradient"
-          >
-            Let's Work Together
-          </GSAPScrollReveal>
-        </section>
         <ContactForm />
-        {/* Lanyard 3D Section */}
-        <section className="relative z-10 w-full flex items-center justify-center">
-          <Lanyard position={[0, 0, 20]} gravity={[0, -40, 0]} />
-        </section>
+        {shouldShowAnimations && (
+          <section className="relative z-20 w-full flex items-center justify-center">
+            <Lanyard position={[0, 0, 20]} gravity={[0, -40, 0]} />
+          </section>
+        )}
       </div>
 
-      {/* Footer */}
-      <footer className="bg-card/80 mt-20 relative z-10">
+      <footer className="relative z-20 mt-20">
         <div className="container mx-auto px-10 py-12">
-          {/* Footer Title Section */}
-          <section className="text-center mb-12">
-            <GSAPScrollReveal
-              baseOpacity={0}
-              enableBlur={true}
-              baseRotation={1}
-              blurStrength={6}
-              containerClassName="max-w-4xl mx-auto"
-              textClassName="text-xl font-semibold text-gradient mb-4"
-            >
-              Ready to bring your ideas to life?
-            </GSAPScrollReveal>
-          </section>
-
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div>
               <h3 className="text-xl font-bold mb-4 text-gradient">
@@ -407,9 +329,9 @@ export default function Home() {
               </h3>
               <GSAPScrollReveal
                 baseOpacity={0}
-                enableBlur={true}
-                baseRotation={2}
-                blurStrength={4}
+                enableBlur={shouldShowAnimations}
+                baseRotation={shouldShowAnimations ? 2 : 0}
+                blurStrength={shouldShowAnimations ? 4 : 0}
                 containerClassName=""
                 textClassName="text-gray-400 text-sm leading-relaxed"
               >
@@ -426,9 +348,11 @@ export default function Home() {
                   <button
                     onClick={() => {
                       try {
-                        document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
+                        document
+                          .getElementById("services")
+                          ?.scrollIntoView({ behavior: "smooth" });
                       } catch (error) {
-                        console.error('Footer navigation error:', error);
+                        console.error("Footer navigation error:", error);
                       }
                     }}
                     className="hover:text-primary transition-colors"
@@ -440,9 +364,11 @@ export default function Home() {
                   <button
                     onClick={() => {
                       try {
-                        document.getElementById('works')?.scrollIntoView({ behavior: 'smooth' });
+                        document
+                          .getElementById("works")
+                          ?.scrollIntoView({ behavior: "smooth" });
                       } catch (error) {
-                        console.error('Footer navigation error:', error);
+                        console.error("Footer navigation error:", error);
                       }
                     }}
                     className="hover:text-primary transition-colors"
@@ -454,9 +380,11 @@ export default function Home() {
                   <button
                     onClick={() => {
                       try {
-                        document.getElementById('skills')?.scrollIntoView({ behavior: 'smooth' });
+                        document
+                          .getElementById("skills")
+                          ?.scrollIntoView({ behavior: "smooth" });
                       } catch (error) {
-                        console.error('Footer navigation error:', error);
+                        console.error("Footer navigation error:", error);
                       }
                     }}
                     className="hover:text-primary transition-colors"
@@ -468,9 +396,11 @@ export default function Home() {
                   <button
                     onClick={() => {
                       try {
-                        document.getElementById('experience')?.scrollIntoView({ behavior: 'smooth' });
+                        document
+                          .getElementById("experience")
+                          ?.scrollIntoView({ behavior: "smooth" });
                       } catch (error) {
-                        console.error('Footer navigation error:', error);
+                        console.error("Footer navigation error:", error);
                       }
                     }}
                     className="hover:text-primary transition-colors"
@@ -501,9 +431,9 @@ export default function Home() {
           <div className="border-t border-gray-800 mt-12 pt-8 text-center">
             <GSAPScrollReveal
               baseOpacity={0}
-              enableBlur={true}
-              baseRotation={0}
-              blurStrength={3}
+              enableBlur={shouldShowAnimations}
+              baseRotation={shouldShowAnimations ? 0 : 0}
+              blurStrength={shouldShowAnimations ? 3 : 0}
               containerClassName=""
               textClassName="text-gray-400"
             >

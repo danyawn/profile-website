@@ -1,0 +1,50 @@
+[
+  {
+    "title": "FlyWise E-Ticketing System",
+    "description": "Full-stack e-ticketing solution with search functionality and passenger data management.",
+    "image": "/projects/flywise.png",
+    "demoLink": "#",
+    "githubLink": "#",
+    "tags": ["React", "Node.js", "Express", "PostgreSQL"]
+  },
+  {
+    "title": "Car Showcase Website",
+    "description": "A car showcase website with a fully responsive design and a modern look.",
+    "image": "/projects/car-showcase.png",
+    "demoLink": "#",
+    "githubLink": "#",
+    "tags": ["React", "CSS"]
+  },
+  {
+    "title": "AWS Data Analysis Project",
+    "description": "Data analysis project using AWS cloud services for processing and visualizing large datasets.",
+    "image": "/projects/chatbot-using-aws.png",
+    "demoLink": "#",
+    "githubLink": "#",
+    "tags": ["AWS", "Python", "Data Analysis"]
+  },
+  {
+    "title": "Company Profile Website",
+    "description": "A company profile website with a clean and modern design and fully functional.",
+    "image": "/projects/arahmata-profile.png",
+    "demoLink": "#",
+    "githubLink": "#",
+    "tags": ["React", "Node.js", "Express", "PostgreSQL"]
+  },
+  {
+    "title": "Real-Estate Website",
+    "description": "A real-estate website with a fully informative and responsive design.",
+    "image": "/projects/saeland.png",
+    "demoLink": "#",
+    "githubLink": "#",
+    "tags": ["React", "Node.js", "Express", "PostgreSQL"]
+  },
+  {
+    "title": "URL Classification System",
+    "description": "A URL classification system that classifies URLs into Benign or Malicious.",
+    "image": "/projects/url-classification.png",
+    "demoLink": "#",
+    "githubLink": "#",
+    "tags": ["Python", "Machine Learning"]
+  }
+]

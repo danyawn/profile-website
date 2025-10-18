@@ -1,0 +1,143 @@
+{
+  "workExperience": [
+    {
+      "title": "Front-end Web Developer",
+      "company": "Techave.Dev - Yogyakarta",
+      "period": "Dec 2022 - Present",
+      "description": [
+        "2+ Years experience as a Front-end Web Developer",
+        "Building scalable, responsive and interactive web applications",
+        "Developing frontend solutions using modern technologies",
+        "Collaborating with design teams and implementing comprehensive software solutions"
+      ],
+      "icon": "Briefcase"
+    },
+    {
+      "title": "Intern Remote AWS Cloud Data Engineer",
+      "company": "RevoU - Bandung",
+      "period": "Jan 2024 - May 2024",
+      "description": [
+        "Successfully completed the internship from start to finish",
+        "Completed final project data analysis with cases provided by mentors",
+        "Implemented AWS cloud solutions for data processing"
+      ],
+      "icon": "Briefcase"
+    },
+    {
+      "title": "Full Stack Website Developer Intern",
+      "company": "Binar Academy - Tangerang, Banten",
+      "period": "Feb 2023 - Jun 2023",
+      "description": [
+        "Successfully completed 8 chapters of the internship program",
+        "Developed a full-stack E-Ticketing website with a team",
+        "Created ticket search functionality and front-end components",
+        "Implemented passenger data input interface"
+      ],
+      "icon": "Briefcase"
+    }
+  ],
+  "education": [
+    {
+      "title": "Bachelor of Informatics Engineering (S1)",
+      "company": "Universitas Pembangunan Nasional Veteran Yogyakarta",
+      "period": "Sep 2020 - Apr 2025",
+      "description": [
+        "Pursuing Bachelor's degree in Informatics Engineering with focus on software development",
+        "Studying advanced programming concepts, data structures, and algorithms",
+        "Gaining comprehensive understanding of software engineering principles",
+        "Developing expertise in web technologies, database systems, and software architecture",
+        "Maintaining a GPA of 3.69 (2025)"
+      ],
+      "icon": "GraduationCap"
+    },
+    {
+      "title": "Certificate of Junior Web Developer",
+      "company": "BNSP - Yogyakarta",
+      "period": "Jan 2023 - Jan 2027",
+      "description": [
+        "Successfully completed the Junior Web Developer course",
+        "Learned web development fundamentals",
+        "Built responsive websites using HTML, CSS, and JavaScript"
+      ],
+      "icon": "GraduationCap"
+    },
+    {
+      "title": "React JS Web Frontend Bootcamp",
+      "company": "Sanber Code - Bandung",
+      "period": "Oct 2022 - Present",
+      "description": [
+        "Successfully completed the intensive 1-month bootcamp",
+        "Learned React.js fundamentals and advanced concepts",
+        "Built multiple projects using React.js"
+      ],
+      "icon": "GraduationCap"
+    },
+    {
+      "title": "JavaScript Programming Bootcamp",
+      "company": "Dicoding - Bandung",
+      "period": "Sep 2023 - Oct 2023",
+      "description": [
+        "Completed the Basic JavaScript Programming class before the deadline",
+        "Achieved good scores on the final test",
+        "Built applications using JavaScript"
+      ],
+      "icon": "GraduationCap"
+    },
+    {
+      "title": "React Web Application Development",
+      "company": "Dicoding - Bandung",
+      "period": "Nov 2023",
+      "description": [
+        "Successfully created a Personal Notes application using React.js",
+        "Passed the course with good grades",
+        "Implemented CRUD functionality in the application"
+      ],
+      "icon": "GraduationCap"
+    },
+    {
+      "title": "Website Developer Bootcamp",
+      "company": "Battistrada Developer - Yogyakarta",
+      "period": "Apr 2022",
+      "description": [
+        "Successfully completed the Ramadhan Course at Batdev Academy",
+        "Learned web development fundamentals",
+        "Built responsive websites using HTML, CSS, and JavaScript"
+      ],
+      "icon": "GraduationCap"
+    },
+    {
+      "title": "High School Diploma (MIPA)",
+      "company": "SMA Negeri 1 Lempuing - South Sumatra",
+      "period": "Jun 2017 - Jun 2020",
+      "description": [
+        "Successfully graduated from high school with good grades",
+        "Specialized in Mathematics and Natural Sciences (MIPA)"
+      ],
+      "icon": "GraduationCap"
+    }
+  ],
+  "organizations": [
+    {
+      "title": "Head of Media and Information Department",
+      "company": "Himpunan Mahasiswa Informatika - Yogyakarta",
+      "period": "Jun 2022 - Dec 2023",
+      "description": [
+        "Led the Media and Information Department effectively",
+        "Provided direction and created work programs for one period",
+        "Managed team members and coordinated department activities"
+      ],
+      "icon": "Users"
+    },
+    {
+      "title": "KOMINFO Staff",
+      "company": "Himpunan Mahasiswa Informatika - Yogyakarta",
+      "period": "Jan 2021 - Dec 2021",
+      "description": [
+        "Successfully executed daily work programs",
+        "Actively participated in organizational activities",
+        "Supported communication and information dissemination"
+      ],
+      "icon": "Users"
+    }
+  ]
+}

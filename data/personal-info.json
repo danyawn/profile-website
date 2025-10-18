@@ -1,0 +1,27 @@
+{
+  "name": "Wayan Danu Tirta",
+  "title": "Full-stack Web Developer & Software Engineer",
+  "location": "Yogyakarta, Indonesia",
+  "bio": "Professional Full-stack Web Developer and Software Engineer from Yogyakarta, Indonesia. Specializing in React.js, Next.js, Node.js, AWS Cloud Services, and modern web technologies. Expert in building scalable web applications with exceptional user experiences.",
+  "contact": {
+    "email": "wayandanutirta@example.com",
+    "phone": "+62 822 7803 7765",
+    "whatsapp": "6282278037765",
+    "whatsappMessage": "Halo Wayan Danu, saya ingin berdiskusi lebih lanjut mengenai project atau kolaborasi.",
+    "location": "Yogyakarta, Indonesia"
+  },
+  "social": {
+    "github": "https://github.com/wayandanu",
+    "linkedin": "https://linkedin.com/in/wayandanutirta",
+    "twitter": "https://twitter.com/wayandanutirta",
+    "instagram": "https://instagram.com/wayandanutirta",
+    "website": "https://wayandanutirta.dev"
+  },
+  "cv": {
+    "path": "/cv/resume-dan.pdf"
+  },
+  "website": {
+    "url": "https://wayandanutirta.dev",
+    "metaImage": "/images/profile_me.jpg"
+  }
+}

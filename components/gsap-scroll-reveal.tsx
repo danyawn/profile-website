@@ -24,7 +24,7 @@ export default function GSAPScrollReveal({
   children,
   containerClassName = "",
   textClassName = "",
-  baseOpacity = 0,
+  baseOpacity = 0.3,
   enableBlur = true,
   baseRotation = 0,
   blurStrength = 10,
@@ -68,7 +68,7 @@ export default function GSAPScrollReveal({
       // Create scroll-triggered animation
       scrollTrigger = ScrollTrigger.create({
         trigger: container,
-        start: "top 80%",
+        start: "top 95%",
         end: "bottom 20%",
         onEnter: () => {
           gsap.to(animationTargets, {
@@ -119,12 +119,30 @@ export default function GSAPScrollReveal({
           opacity: 1,
           filter: "none",
           rotationX: 0,
+          clearProps: "all"
         });
       }
     }
 
+    // Failsafe: Show text after 2 seconds if animation hasn't triggered
+    const failsafeTimeout = setTimeout(() => {
+      if (textElement) {
+        const currentOpacity = parseFloat(getComputedStyle(textElement).opacity);
+        if (currentOpacity < 0.5) {
+          gsap.to(textElement, {
+            opacity: 1,
+            filter: "none",
+            rotationX: 0,
+            duration: 0.5,
+            ease: "power2.out"
+          });
+        }
+      }
+    }, 2000);
+
     return () => {
       try {
+        clearTimeout(failsafeTimeout);
         if (scrollTrigger) {
           scrollTrigger.kill();
         }
