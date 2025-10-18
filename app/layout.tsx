@@ -15,7 +15,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://yan-danu.netlify.app"),
+  metadataBase: new URL("https://yan-danu-tirta.netlify.app/"),
   title: "Wayan Danu Tirta | Full-stack Web Developer & Software Engineer",
   description:
     "Professional Full-stack Web Developer and Software Engineer from Yogyakarta, Indonesia. Specializing in React.js, Next.js, Node.js, AWS Cloud Services, and modern web technologies. Expert in building scalable web applications with exceptional user experiences.",
