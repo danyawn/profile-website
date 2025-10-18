@@ -8,6 +8,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { projects } from "@/data";
 import AnimatedTitle from "@/components/animated-title";
+import Link from "next/link";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -16,6 +17,7 @@ interface ProjectProps {
   description: string;
   image: string;
   tags: string[];
+  demoLink?: string;
   index: number;
 }
 
@@ -23,6 +25,7 @@ function ProjectCard({
   title,
   description,
   image,
+  demoLink,
   tags,
   index,
 }: ProjectProps) {
@@ -32,12 +35,13 @@ function ProjectCard({
     const el = cardRef.current;
     if (!el) return;
 
-    gsap.fromTo(el,
+    gsap.fromTo(
+      el,
       {
         opacity: 0,
         y: 80,
         rotateY: 15,
-        scale: 0.8
+        scale: 0.8,
       },
       {
         opacity: 1,
@@ -50,15 +54,16 @@ function ProjectCard({
         scrollTrigger: {
           trigger: el,
           start: "top 85%",
-          toggleActions: "play none none reverse"
-        }
+          toggleActions: "play none none reverse",
+        },
       }
     );
 
-    gsap.fromTo(el.querySelector('.project-image'),
+    gsap.fromTo(
+      el.querySelector(".project-image"),
       {
         scale: 1.2,
-        opacity: 0.8
+        opacity: 0.8,
       },
       {
         scale: 1,
@@ -69,16 +74,17 @@ function ProjectCard({
         scrollTrigger: {
           trigger: el,
           start: "top 85%",
-          toggleActions: "play none none reverse"
-        }
+          toggleActions: "play none none reverse",
+        },
       }
     );
 
-    gsap.fromTo(el.querySelectorAll('.tag'),
+    gsap.fromTo(
+      el.querySelectorAll(".tag"),
       {
         opacity: 0,
         scale: 0,
-        rotate: 180
+        rotate: 180,
       },
       {
         opacity: 1,
@@ -91,54 +97,56 @@ function ProjectCard({
         scrollTrigger: {
           trigger: el,
           start: "top 85%",
-          toggleActions: "play none none reverse"
-        }
+          toggleActions: "play none none reverse",
+        },
       }
     );
 
     return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, [index]);
 
   return (
-    <motion.div
-      ref={cardRef}
-      className="card-glass-hover overflow-hidden group"
-      whileHover={{
-        y: -10,
-        boxShadow: "0 20px 25px -5px rgba(139, 92, 246, 0.3)",
-        backgroundColor: "rgba(255, 255, 255, 0.1)",
-        transition: { duration: 0.2 },
-      }}
-    >
-      <div className="relative h-48 overflow-hidden">
-        <Image
-          src={image || "https://placehold.co/400x300/8B5CF6/FFFFFF"}
-          alt={title}
-          fill
-          className="project-image object-cover transition-transform duration-700 group-hover:scale-110"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-          <div className="flex flex-wrap gap-2">
-            {tags.map((tag, tagIndex) => (
-              <span
-                key={tagIndex}
-                className="tag text-xs bg-primary/80 text-white px-2 py-1 rounded-full"
-              >
-                {tag}
-              </span>
-            ))}
+    <Link href={demoLink || "#"} target="_blank">
+      <motion.div
+        ref={cardRef}
+        className="card-glass-hover overflow-hidden group"
+        whileHover={{
+          y: -10,
+          boxShadow: "0 20px 25px -5px rgba(139, 92, 246, 0.3)",
+          backgroundColor: "rgba(255, 255, 255, 0.1)",
+          transition: { duration: 0.2 },
+        }}
+      >
+        <div className="relative h-48 overflow-hidden">
+          <Image
+            src={image || "https://placehold.co/400x300/8B5CF6/FFFFFF"}
+            alt={title}
+            fill
+            className="project-image object-cover transition-transform duration-700 group-hover:scale-110"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+            <div className="flex flex-wrap gap-2">
+              {tags.map((tag, tagIndex) => (
+                <span
+                  key={tagIndex}
+                  className="tag text-xs bg-primary/80 text-white px-2 py-1 rounded-full"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-      <div className="p-6">
-        <h3 className="text-lg font-semibold group-hover:text-primary transition-colors mb-2">
-          {title}
-        </h3>
-        <p className="text-gray-400 text-sm mb-4">{description}</p>
-      </div>
-    </motion.div>
+        <div className="p-6">
+          <h3 className="text-lg font-semibold group-hover:text-primary transition-colors mb-2">
+            {title}
+          </h3>
+          <p className="text-gray-400 text-sm mb-4">{description}</p>
+        </div>
+      </motion.div>
+    </Link>
   );
 }
 

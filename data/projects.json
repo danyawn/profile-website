@@ -5,7 +5,12 @@
     "image": "/projects/flywise.png",
     "demoLink": "#",
     "githubLink": "#",
-    "tags": ["React", "Node.js", "Express", "PostgreSQL"]
+    "tags": [
+      "React",
+      "Node.js",
+      "Express",
+      "PostgreSQL"
+    ]
   },
   {
     "title": "Car Showcase Website",
@@ -13,7 +18,10 @@
     "image": "/projects/car-showcase.png",
     "demoLink": "#",
     "githubLink": "#",
-    "tags": ["React", "CSS"]
+    "tags": [
+      "React",
+      "CSS"
+    ]
   },
   {
     "title": "AWS Data Analysis Project",
@@ -21,7 +29,11 @@
     "image": "/projects/chatbot-using-aws.png",
     "demoLink": "#",
     "githubLink": "#",
-    "tags": ["AWS", "Python", "Data Analysis"]
+    "tags": [
+      "AWS",
+      "Python",
+      "Data Analysis"
+    ]
   },
   {
     "title": "Company Profile Website",
@@ -29,15 +41,25 @@
     "image": "/projects/arahmata-profile.png",
     "demoLink": "#",
     "githubLink": "#",
-    "tags": ["React", "Node.js", "Express", "PostgreSQL"]
+    "tags": [
+      "React",
+      "Node.js",
+      "Express",
+      "PostgreSQL"
+    ]
   },
   {
     "title": "Real-Estate Website",
     "description": "A real-estate website with a fully informative and responsive design.",
     "image": "/projects/saeland.png",
-    "demoLink": "#",
+    "demoLink": "saeland.id",
     "githubLink": "#",
-    "tags": ["React", "Node.js", "Express", "PostgreSQL"]
+    "tags": [
+      "React",
+      "Node.js",
+      "Express",
+      "PostgreSQL"
+    ]
   },
   {
     "title": "URL Classification System",
@@ -45,6 +67,35 @@
     "image": "/projects/url-classification.png",
     "demoLink": "#",
     "githubLink": "#",
-    "tags": ["Python", "Machine Learning"]
+    "tags": [
+      "Python",
+      "Machine Learning"
+    ]
+  },
+  {
+    "title": "Simple Personal Notes",
+    "description": "A simple personal notes application with a fully responsive design and a modern look.",
+    "image": "/projects/simple-personal-notes.png",
+    "demoLink": "#",
+    "githubLink": "#",
+    "tags": [
+      "React",
+      "Node.js",
+      "Express",
+      "PostgreSQL"
+    ]
+  },
+  {
+    "title": "Tokyo Experience",
+    "description": "A website that provides information about Tokyo, Japan.",
+    "image": "/projects/tokyo-experience.png",
+    "demoLink": "https://tokyo-glass.vercel.app/",
+    "githubLink": "#",
+    "tags": [
+      "React",
+      "Node.js",
+      "Express",
+      "PostgreSQL"
+    ]
   }
 ]

@@ -69,7 +69,7 @@
     "@types/react-dom": "^18",
     "autoprefixer": "^10",
     "eslint": "^8",
-    "eslint-config-next": "13.5.4",
+    "eslint-config-next": "^15.3.3",
     "postcss": "^8",
     "typescript": "^5"
   },
