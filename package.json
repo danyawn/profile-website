@@ -47,7 +47,7 @@
     "gsap": "^3.13.0",
     "input-otp": "1.4.1",
     "lucide-react": "^0.279.0",
-    "next": "^15.3.3",
+    "next": "15.3.6",
     "ogl": "^1.0.11",
     "react": "^18",
     "react-day-picker": "8.10.1",
